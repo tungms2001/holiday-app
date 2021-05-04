@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="35dp"
+        android:textSize="27sp"
+        android:text="Sign Up"
+        android:textColor="@color/Green_Shamrock"/>
+
+    <TextView
+        android:id="@+id/tv_fullname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_signup"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="@string/full_name"/>
+    <EditText
+        android:id="@+id/txt_fullname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_fullname"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edittext_background"
+        android:padding="13dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_fullname"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="@string/email"/>
+    <EditText
+        android:id="@+id/txt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_email"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="5dp"
+        android:padding="13dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_email"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="@string/phone"/>
+    <EditText
+        android:id="@+id/txt_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_phone"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="5dp"
+        android:padding="13dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_phone"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="@string/password"/>
+    <EditText
+        android:id="@+id/txt_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_password"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="5dp"
+        android:padding="13dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_confirm_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_password"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:text="@string/confirm_password"/>
+    <EditText
+        android:id="@+id/txt_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_confirm_password"
+        android:background="@drawable/edittext_background"
+        android:layout_marginTop="5dp"
+        android:padding="13dp"
+        android:textSize="20sp"/>
+
+    <android.widget.Button
+        android:id="@+id/btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_confirm_password"
+        android:layout_marginTop="37dp"
+        android:padding="13dp"
+        android:background="@drawable/button_background"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/sign_up"/>
+</>
