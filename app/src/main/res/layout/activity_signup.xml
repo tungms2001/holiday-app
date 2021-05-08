@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/tv_signup"
@@ -17,7 +17,7 @@
         android:layout_marginBottom="35dp"
         android:textSize="27sp"
         android:text="Sign Up"
-        android:textColor="@color/Green_Shamrock"/>
+        android:textColor="@color/green_shamrock"/>
 
     <TextView
         android:id="@+id/tv_fullname"
@@ -124,4 +124,4 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:text="@string/sign_up"/>
-</>
+</RelativeLayout>

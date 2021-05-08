@@ -7,5 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Green_Shamrock">#03AC13</color>
+    <color name="green_shamrock">#03AC13</color>
+    <color name="while_nearly">#0F000000</color>
 </resources>

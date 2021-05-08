@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Holidayapp">
-        <activity android:name=".TourInfoBlock"></activity>
-        <activity android:name=".ToursActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".TourInfoBlock" />
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

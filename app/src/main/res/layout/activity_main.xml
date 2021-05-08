@@ -1,70 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:layout_marginBottom="35dp"
-        android:textSize="27sp"
-        android:text="@string/login"
-        android:textColor="@color/Green_Shamrock"/>
-    <TextView
-        android:id="@+id/tv_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_login"
-        android:textSize="20sp"
-        android:textAllCaps="true"
-        android:text="@string/account"/>
-    <EditText
-        android:id="@+id/txt_account"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:layout_below="@+id/tv_account"
-        android:background="@drawable/edittext_background"
-        android:padding="13dp"/>
-    <TextView
-        android:id="@+id/tv_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_account"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textAllCaps="true"
-        android:text="@string/password"/>
-    <EditText
-        android:id="@+id/txt_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:layout_below="@+id/tv_password"
-        android:background="@drawable/edittext_background"
-        android:padding="13dp"
-        android:inputType="textPassword"/>
-    <android.widget.Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_password"
-        android:layout_marginTop="37dp"
-        android:padding="13dp"
-        android:textSize="20sp"
-        android:text="@string/login"
-        android:backgroundTint="@color/Green_Shamrock"
-        android:background="@drawable/button_background"
-        android:textColor="@color/white"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-</RelativeLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

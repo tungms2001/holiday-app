@@ -22,9 +22,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
+
             <ImageView
+                android:id="@+id/iv_tour_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_placeholder"/>
+
+            <TextView
+                android:id="@+id/tv_tour_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_tour_name"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
+                android:text="Thành phố Hồ Chí Minh - Đồng Tháp"/>
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_datetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_tour_name"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iv_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar"/>
+
+            <TextView
+                android:id="@+id/tv_datetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_calendar"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
+                android:text="30/04/2021 - 01/05/2021"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_capacity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_datetime"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/iv_capacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_multi_users"/>
+
+            <TextView
+                android:id="@+id/tv_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_capacity"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
+                android:text="2"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_capacity">
+
+            <ImageView
+                android:id="@+id/iv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_price_tag"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/iv_price"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
+                android:elevation="2dp"
+                android:text="1000$"/>
+
+        </RelativeLayout>
+
     </RelativeLayout>
+
 </RelativeLayout>
