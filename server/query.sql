@@ -69,6 +69,7 @@ CREATE TABLE stop_point(
     id INT AUTO_INCREMENT,
     tour_id INT,
     stop_name VARCHAR(200) CHARSET utf8,
+    service_type VARCHAR(200) CHARSET utf8,
     beginning DATETIME,
     end DATETIME,
     description VARCHAR(200) CHARSET utf8,
@@ -189,3 +190,9 @@ FOREIGN KEY (user) REFERENCES user(username);
 ALTER TABLE stop_point_comment
 ADD CONSTRAINT FK_COMMENT_IN_STOP_POINT
 FOREIGN KEY (stop_point_id) REFERENCES stop_point(id);
+
+INSERT INTO user(username, email, password, fullname, role, created_at, updated_at)
+VALUES ('admin', 'admin@holidayapp.com', 'admin', 'Administrator', 'admin', NOW(), NOW());
+
+INSERT INTO user(username, email, phone, password, fullname, avatar, role, created_at, updated_at)
+VALUES ('tungms', 'tungms@holidayapp.com', '0123456789', 'maisontung', 'Mai Sơn Tùng', 'general', NOW(), NOW());

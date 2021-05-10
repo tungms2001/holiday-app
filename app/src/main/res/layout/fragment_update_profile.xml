@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/while_nearly"
-    tools:context=".fragment.UpdateProfileFragment">
+    tools:context=".fragment.ProfileFragment">
 
     <ImageView
         android:id="@+id/iv_update_avatar"
@@ -58,7 +58,7 @@
             android:layout_below="@+id/tv_update_email"
             android:layout_marginTop="5dp"
             android:padding="13dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_selector_background"
             android:inputType="textEmailAddress"
             android:textSize="20sp"
             android:text="tungms2001@gmail.com"/>
@@ -89,7 +89,7 @@
             android:layout_below="@+id/tv_update_phone"
             android:layout_marginTop="5dp"
             android:padding="13dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_selector_background"
             android:textSize="20sp"
             android:text="0704739698"/>
 
@@ -129,7 +129,7 @@
             android:layout_below="@+id/tv_old_password"
             android:layout_marginTop="5dp"
             android:padding="13dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_selector_background"
             android:inputType="textPassword"
             android:textSize="20sp"/>
 
@@ -150,7 +150,7 @@
             android:layout_below="@+id/tv_new_password"
             android:layout_marginTop="5dp"
             android:padding="13dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_selector_background"
             android:inputType="textPassword"
             android:textSize="20sp"/>
 
@@ -164,9 +164,20 @@
             android:textSize="20sp"
             android:text="@string/confirm_password"/>
 
+        <EditText
+            android:id="@+id/txt_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_confirm_password"
+            android:layout_marginTop="5dp"
+            android:padding="13dp"
+            android:background="@drawable/edit_selector_background"
+            android:inputType="textPassword"
+            android:textSize="20sp"/>
+
     </RelativeLayout>
 
-    <Button
+    <android.widget.Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chk_update_password"

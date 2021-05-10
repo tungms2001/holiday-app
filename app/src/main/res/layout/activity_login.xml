@@ -35,7 +35,7 @@
         android:layout_marginTop="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/tv_account"
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/edit_selector_background"
         android:padding="13dp"/>
 
     <TextView
@@ -55,7 +55,7 @@
         android:layout_marginTop="5dp"
         android:textSize="20sp"
         android:layout_below="@+id/tv_password"
-        android:background="@drawable/edittext_background"
+        android:background="@drawable/edit_selector_background"
         android:padding="13dp"
         android:inputType="textPassword"/>
 

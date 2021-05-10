@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green_shamrock">#03AC13</color>
     <color name="while_nearly">#0F000000</color>
+    <color name="gray_border">#FFDDDFE2</color>
 </resources>
