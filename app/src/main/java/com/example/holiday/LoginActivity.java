@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private String username;
-    private Request request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +56,16 @@ public class LoginActivity extends AppCompatActivity {
                     .add("account", txtAccount.getText().toString())
                     .add("password", txtPassword.getText().toString())
                     .build();
+            String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=login";
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    Log.d("Test", "TesErr");
                 }
 
                 @Override
@@ -87,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                     catch (JSONException e){
                         e.printStackTrace();
                     }
+                    Log.d("Test", "TestMsg");
                 }
             });
         });

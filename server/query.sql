@@ -194,5 +194,5 @@ FOREIGN KEY (stop_point_id) REFERENCES stop_point(id);
 INSERT INTO user(username, email, password, fullname, role, created_at, updated_at)
 VALUES ('admin', 'admin@holidayapp.com', 'admin', 'Administrator', 'admin', NOW(), NOW());
 
-INSERT INTO user(username, email, phone, password, fullname, avatar, role, created_at, updated_at)
+INSERT INTO user(username, email, phone, password, fullname, role, created_at, updated_at)
 VALUES ('tungms', 'tungms@holidayapp.com', '0123456789', 'maisontung', 'Mai Sơn Tùng', 'general', NOW(), NOW());

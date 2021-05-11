@@ -36,7 +36,8 @@
         android:textSize="20sp"
         android:layout_below="@+id/tv_account"
         android:background="@drawable/edit_selector_background"
-        android:padding="13dp"/>
+        android:padding="13dp"
+        android:text="admin"/>
 
     <TextView
         android:id="@+id/tv_password"
@@ -57,7 +58,8 @@
         android:layout_below="@+id/tv_password"
         android:background="@drawable/edit_selector_background"
         android:padding="13dp"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:text="admin"/>
 
     <android.widget.Button
         android:id="@+id/btn_login"

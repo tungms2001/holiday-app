@@ -58,18 +58,20 @@ public class MainActivity extends AppCompatActivity {
             super(fm, behavior);
         }
 
-        public void addFragment(Fragment fragment){
+        public void addFragment(Fragment fragment) {
             mFragments.add(fragment);
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
+
             return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
+
             return mFragments.size();
         }
     }
