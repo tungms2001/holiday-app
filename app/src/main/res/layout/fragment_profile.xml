@@ -2,10 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment"
-    android:background="@color/while_nearly">
+    android:background="@color/while_nearly"
+    tools:context=".fragment.ProfileFragment">
 
     <ImageView
         android:id="@+id/iv_avatar"
@@ -13,7 +14,7 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@color/green_shamrock"/>
+        android:background="@drawable/ic_user"/>
 
     <TextView
         android:id="@+id/tv_fullname"
@@ -22,9 +23,7 @@
         android:layout_below="@+id/iv_avatar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:textSize="27sp"
-        android:text="Mai Sơn Tùng"/>
-
+        android:textSize="27sp"/>
 
     <TextView
         android:id="@+id/tv_username"
@@ -33,14 +32,13 @@
         android:layout_below="@+id/tv_fullname"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:text="\@tungms2001"/>
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:id="@+id/ll_email_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_username"
+        android:layout_below="@id/tv_username"
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -59,8 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:textSize="20sp"
-            android:text="tungms2001@gmail.com"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -68,7 +65,7 @@
         android:id="@+id/ll_phone_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_email_section"
+        android:layout_below="@id/ll_email_section"
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -87,8 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:textSize="20sp"
-            android:text="0704739698"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -96,7 +92,7 @@
         android:id="@+id/ll_trip_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_phone_section"
+        android:layout_below="@id/ll_phone_section"
         android:layout_marginTop="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -119,5 +115,35 @@
             android:text="2"/>
 
     </LinearLayout>
+
+    <android.widget.Button
+        android:id="@+id/btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_trip_section"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="13dp"
+        android:backgroundTint="@color/green_shamrock"
+        android:background="@drawable/button_background"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/update_profile"/>
+
+    <android.widget.Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_update"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:padding="13dp"
+        android:backgroundTint="@color/green_shamrock"
+        android:background="@drawable/button_background"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:text="@string/logout"/>
 
 </RelativeLayout>

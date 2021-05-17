@@ -1,16 +1,17 @@
 <resources>
-    <string name="app_name">holiday-app</string>
+    <string name="app_name">Holiday</string>
     <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="full_name">Full name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="signup">Sign Up</string>
     <string name="forget_password">Forget Password</string>
-    <string name="vis_sms">Vis sms</string>
-    <string name="vis_email">Vis email</string>
+    <string name="via_sms">Via sms</string>
+    <string name="via_email">Via email</string>
     <string name="account_hint">Enter your email/phone number</string>
     <string name="submit">Submit</string>
     <string name="trips">Trips</string>
@@ -21,5 +22,44 @@
     <string name="tour_name">Tour name</string>
     <string name="stop_points">Stop points</string>
     <string name="create">Create</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or">Or</string>
+    <string name="username">Username</string>
+    <string name="status">Status</string>
+    <string name="note">Note</string>
+    <string name="update_image">Update image</string>
+    <string name="during">During</string>
+    <string name="type">Type</string>
+    <string name="departure">Departure</string>
+    <string name="destination">Destination</string>
+    <string name="members">Members</string>
+    <string name="update_profile">Update profile</string>
+    <string name="send">Send</string>
+    <string name="comment_hint">Your comment goes here...</string>
+    <string name="accept">Accept</string>
+    <string name="verification">Verification code</string>
+
+    <string-array name="tour_type">
+        <item>The weekend break</item>
+        <item>The package holiday</item>
+        <item>The group tour</item>
+        <item>The road trip</item>
+        <item>The volunteer travel</item>
+        <item>The long-term slow travel</item>
+        <item>The gap year</item>
+        <item>Visit friends or relatives</item>
+        <item>Event travel</item>
+        <item>Business travel</item>
+    </string-array>
+
+    <string-array name="tour_status">
+        <item>Open</item>
+        <item>Closed</item>
+        <item>In-progress</item>
+        <item>Prepared</item>
+        <item>Delayed</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

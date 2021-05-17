@@ -5,15 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.holiday.fragment.HistoryFragment;
-import com.example.holiday.fragment.MapsFragment;
+import com.example.holiday.fragment.NotificationFragment;
 import com.example.holiday.fragment.ProfileFragment;
 import com.example.holiday.fragment.ToursFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -35,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
         tlMain = findViewById(R.id.tl_main);
 
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_list));
-        tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_messenger));
+        tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_notification));
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_history_clock));
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_user));
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new ToursFragment());
-        adapter.addFragment(new MapsFragment());
+        adapter.addFragment(new NotificationFragment());
         adapter.addFragment(new HistoryFragment());
         adapter.addFragment(new ProfileFragment());
 
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         tlMain.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(vpMain));
     }
 
-    private static class PageAdapter extends FragmentStatePagerAdapter {
+    private static class PageAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragments = new Vector<>();
 
@@ -65,13 +62,11 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-
             return mFragments.get(position);
         }
 
         @Override
         public int getCount() {
-
             return mFragments.size();
         }
     }

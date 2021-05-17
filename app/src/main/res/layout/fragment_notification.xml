@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/while_nearly"
-    tools:context=".fragment.HistoryFragment">
+    tools:context=".fragment.NotificationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_tours"
+        android:id="@+id/rv_my_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"

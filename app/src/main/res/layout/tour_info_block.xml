@@ -2,18 +2,20 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
 
     <ImageView
-        android:id="@+id/ib_avatar"
+        android:id="@+id/iv_avatar"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/tour_image_background"/>
+        android:background="@drawable/tour_image_background"
+        android:scaleType="centerCrop"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ib_avatar"
+        android:layout_below="@id/iv_avatar"
         android:padding="15dp"
         android:background="@drawable/tour_info_background">
 
@@ -35,13 +37,13 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iv_tour_name"
                 android:layout_marginStart="15dp"
-                android:textSize="20sp"
-                android:text="Thành phố Hồ Chí Minh - Đồng Tháp"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
 
+
         <RelativeLayout
-            android:id="@+id/rl_datetime"
+            android:id="@+id/rl_during"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_tour_name"
@@ -54,61 +56,58 @@
                 android:src="@drawable/ic_calendar"/>
 
             <TextView
-                android:id="@+id/tv_datetime"
+                android:id="@+id/tv_during"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iv_calendar"
                 android:layout_marginStart="15dp"
-                android:textSize="20sp"
-                android:text="30/04/2021 - 01/05/2021"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_capacity"
+            android:id="@+id/rl_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_datetime"
+            android:layout_below="@+id/rl_during"
             android:layout_marginBottom="10dp">
 
             <ImageView
-                android:id="@+id/iv_capacity"
+                android:id="@+id/iv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_multi_users"/>
+                android:src="@drawable/ic_target"/>
 
             <TextView
-                android:id="@+id/tv_capacity"
+                android:id="@+id/tv_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/iv_capacity"
+                android:layout_toEndOf="@+id/iv_status"
                 android:layout_marginStart="15dp"
-                android:textSize="20sp"
-                android:text="2"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_price"
+            android:id="@+id/rl_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_capacity">
+            android:layout_below="@+id/rl_status">
 
             <ImageView
-                android:id="@+id/iv_price"
+                android:id="@+id/iv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_price_tag"/>
+                android:src="@drawable/ic_travelling"/>
 
             <TextView
-                android:id="@+id/tv_price"
+                android:id="@+id/tv_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/iv_price"
+                android:layout_toEndOf="@+id/iv_type"
                 android:layout_marginStart="15dp"
                 android:textSize="20sp"
-                android:elevation="2dp"
-                android:text="1000$"/>
+                android:elevation="2dp"/>
 
         </RelativeLayout>
 
