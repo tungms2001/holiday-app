@@ -1,6 +1,6 @@
 <?php
 class UserController extends BaseController{
-    private $user_model;
+    private UserModel $user_model;
 
     public function __construct() {
         $this->model("UserModel");
@@ -11,20 +11,17 @@ class UserController extends BaseController{
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = array(
-                'account' => trim($_POST['account']),
-                'password' => trim($_POST['password'])
+            $login_user = $this->user_model->login(
+                trim($_POST['account']),
+                trim($_POST['password'])
             );
-
-            $login_user = $this->user_model->login($data['account'], $data['password']);
             echo json_encode($login_user);
         }
     }
 
-    public function detail() {
+    public function get_detail() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $username = $_GET['username'];
-            $user_detail = $this->user_model->detail($username);
+            $user_detail = $this->user_model->get_detail($_GET['username']);
             echo json_encode($user_detail);
         }
     }
@@ -33,19 +30,12 @@ class UserController extends BaseController{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = array(
-                'username' => trim($_POST['username']),
-                'email' => trim($_POST['email']),
-                'phone' => trim($_POST['phone']),
-                'password' => trim($_POST['password']),
-                'fullname' => trim($_POST['fullname'])
-            );
             $signup_user = $this->user_model->signup(
-                $data['username'],
-                $data['email'],
-                $data['phone'],
-                $data['password'],
-                $data['fullname']
+                trim($_POST['username']),
+                trim($_POST['email']),
+                trim($_POST['phone']),
+                trim($_POST['password']),
+                trim($_POST['fullname'])
             );
             echo json_encode($signup_user);
         }
@@ -55,21 +45,13 @@ class UserController extends BaseController{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = array(
-                'avatar' => trim($_POST['avatar']),
-                'fullname' => trim($_POST['fullname']),
-                'username' => trim($_POST['username']),
-                'email' => trim($_POST['email']),
-                'phone' => trim($_POST['phone']),
-                'new_password' => trim($_POST['new_password'])
-            );
             $update_user = $this->user_model->update(
-                $data['avatar'],
-                $data['fullname'],
-                $data['username'],
-                $data['email'],
-                $data['phone'],
-                $data['new_password']
+                trim($_POST['avatar']),
+                trim($_POST['fullname']),
+                trim($_POST['username']),
+                trim($_POST['email']),
+                trim($_POST['phone']),
+                trim($_POST['new_password'])
             );
             echo json_encode($update_user);
         }

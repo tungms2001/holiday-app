@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText txtAccount;
     private EditText txtPassword;
-//    private TextView tvForgotPassword;
+    private TextView tvForgotPassword;
     private Button btnSignup;
 
     private Session session;
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                     .add("password", txtPassword.getText().toString())
                     .build();
 
-            String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=login";
+            String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=login";
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
@@ -93,10 +93,10 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-//        tvForgotPassword.setOnClickListener(v -> {
-//            Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
-//            startActivity(intent);
-//        });
+        tvForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+            startActivity(intent);
+        });
 
         btnSignup.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtAccount = findViewById(R.id.txt_account);
         txtPassword = findViewById(R.id.txt_password);
-//        tvForgotPassword = findViewById(R.id.tv_forgot_password);
+        tvForgotPassword = findViewById(R.id.tv_forgot_password);
         btnSignup = findViewById(R.id.btn_signup);
     }
 }

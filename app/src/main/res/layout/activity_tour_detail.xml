@@ -1,301 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TourDetailActivity">
 
-    <RelativeLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="75dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_tour_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/tour_name"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_name"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_tour_name"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/type"/>
+
+                <Spinner
+                    android:id="@+id/spn_tour_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/tv_tour_type"
+                    android:layout_alignBottom="@+id/tv_tour_type"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="20dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_tour_type"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/status"/>
+
+                <Spinner
+                    android:id="@+id/spn_tour_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/tv_tour_status"
+                    android:layout_alignBottom="@+id/tv_tour_status"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="20dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_departure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tour_status"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_departure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/departure"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_departure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_departure"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_destination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tour_departure"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/destination"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_destination"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_destination"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_during"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tour_destination"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_during"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/during"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_during"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_during"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_members"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tour_during"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/members"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_members"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_members"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:inputType="textMultiLine"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_tour_members"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_tour_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:text="@string/note"/>
+
+                <EditText
+                    android:id="@+id/txt_tour_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_tour_note"
+                    android:layout_marginTop="5dp"
+                    android:padding="13dp"
+                    android:background="@drawable/edit_selector_background"
+                    android:inputType="textMultiLine"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_tour_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_tour_note"
+                android:layout_marginTop="20dp">
+
+                <android.widget.Button
+                    android:id="@+id/btn_tour_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/green_parakeet"
+                    android:textColor="@color/white"
+                    android:text="@string/update_image"/>
+
+                <ImageView
+                    android:id="@+id/iv_tour_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_tour_image"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
+
+            <android.widget.Button
+                android:id="@+id/btn_tour_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_tour_image"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_background"
+                android:textColor="@color/white"
+                android:text="@string/create"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_tour_submit"
+                android:layout_marginTop="20dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30dp">
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-        <RelativeLayout
-            android:id="@+id/rl_tour_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_tour_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/tour_name"/>
-
-            <EditText
-                android:id="@+id/txt_tour_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tour_name"
-                android:layout_marginTop="5dp"
-                android:padding="13dp"
-                android:background="@drawable/edit_selector_background"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_type"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/txt_comment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rl_tour_name"
-            android:layout_marginTop="20dp">
+            android:layout_weight="9"
+            android:hint="@string/comment_hint"/>
 
-            <TextView
-                android:id="@+id/tv_tour_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/type"/>
-
-            <Spinner
-                android:id="@+id/spn_tour_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/tv_tour_type"
-                android:layout_alignBottom="@+id/tv_tour_type"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="20dp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_status"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/ib_comment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rl_tour_type"
-            android:layout_marginTop="20dp">
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/ic_send"
+            android:textColor="@color/white"/>
 
-            <TextView
-                android:id="@+id/tv_tour_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/status"/>
+    </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spn_tour_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/tv_tour_status"
-                android:layout_alignBottom="@+id/tv_tour_status"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="20dp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_departure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_tour_status"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/tv_tour_departure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/departure"/>
-
-            <EditText
-                android:id="@+id/txt_tour_departure"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tour_departure"
-                android:layout_marginTop="5dp"
-                android:padding="13dp"
-                android:background="@drawable/edit_selector_background"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_destination"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_tour_departure"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/tv_tour_destination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/destination"/>
-
-            <EditText
-                android:id="@+id/txt_tour_destination"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tour_destination"
-                android:layout_marginTop="5dp"
-                android:padding="13dp"
-                android:background="@drawable/edit_selector_background"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_during"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rl_tour_destination"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/tv_tour_during"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/during"/>
-
-            <EditText
-                android:id="@+id/txt_tour_during"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tour_during"
-                android:layout_marginTop="5dp"
-                android:padding="13dp"
-                android:background="@drawable/edit_selector_background"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rl_tour_members"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/rl_tour_during"-->
-<!--            android:layout_marginTop="20dp">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv_tour_members"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textAllCaps="true"-->
-<!--                android:textSize="20sp"-->
-<!--                android:text="@string/members"/>-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/txt_tour_members"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_below="@+id/tv_tour_members"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:padding="13dp"-->
-<!--                android:background="@drawable/edit_selector_background"-->
-<!--                android:inputType="textMultiLine"-->
-<!--                android:textSize="20sp"/>-->
-
-<!--        </RelativeLayout>-->
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_tour_during"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:id="@+id/tv_tour_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                android:text="@string/note"/>
-
-            <EditText
-                android:id="@+id/txt_tour_note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_tour_note"
-                android:layout_marginTop="5dp"
-                android:padding="13dp"
-                android:background="@drawable/edit_selector_background"
-                android:inputType="textMultiLine"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_tour_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_tour_note"
-            android:layout_marginTop="20dp">
-
-            <android.widget.Button
-                android:id="@+id/btn_tour_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/green_parakeet"
-                android:textColor="@color/white"
-                android:text="@string/update_image"/>
-
-            <ImageView
-                android:id="@+id/iv_tour_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_tour_image"
-                android:scaleType="centerCrop" />
-
-        </RelativeLayout>
-
-        <android.widget.Button
-            android:id="@+id/btn_tour_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_tour_image"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_background"
-            android:textColor="@color/white"
-            android:text="@string/create"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_tour_submit"
-            android:layout_marginTop="20dp"/>
-
-
-        <LinearLayout
-            android:id="@+id/ll_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rv_comment"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <EditText
-                android:id="@+id/txt_comment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:hint="@string/comment_hint"/>
-
-            <android.widget.Button
-                android:id="@+id/btn_comment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:backgroundTint="@color/green_shamrock"
-                android:textColor="@color/white"
-                android:text="@string/send"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

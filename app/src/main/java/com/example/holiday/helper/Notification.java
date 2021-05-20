@@ -1,10 +1,10 @@
 package com.example.holiday.helper;
 
 public class Notification {
-    private String avatar;
-    private String creator;
-    private String tourName;
-    private String type;
+    private final String avatar;
+    private final String creator;
+    private final String tourName;
+    private final String type;
 
     public Notification(String avatar, String creator, String tourName, String type) {
         this.avatar = avatar;

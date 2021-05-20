@@ -1,6 +1,6 @@
 <?php
 class TourController extends BaseController {
-    private $tour_model;
+    private TourModel $tour_model;
 
     public function __construct() {
         $this->model('TourModel');
@@ -11,33 +11,41 @@ class TourController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $data = array(
-                'creator' => trim($_POST['creator']),
-                'tour_name' => trim($_POST['tour_name']),
-                'type' => trim($_POST['type']),
-                'status' => trim($_POST['status']),
-                'departure' => trim($_POST['departure']),
-                'destination' => trim($_POST['destination']),
-                'during' => trim($_POST['during']),
-                'members' => trim($_POST['members']),
-                'note' => trim($_POST['note']),
-                'image' => trim($_POST['image'])
-            );
-
             $create_tour = $this->tour_model->create(
-                $data['creator'],
-                $data['tour_name'],
-                $data['type'],
-                $data['status'],
-                $data['departure'],
-                $data['destination'],
-                $data['during'],
-                $data['members'],
-                $data['note'],
-                $data['image']
+                trim($_POST['creator']),
+                trim($_POST['tour_name']),
+                trim($_POST['type']),
+                trim($_POST['status']),
+                trim($_POST['departure']),
+                trim($_POST['destination']),
+                trim($_POST['during']),
+                trim($_POST['members']),
+                trim($_POST['note']),
+                trim($_POST['image'])
             );
 
             echo json_encode($create_tour);
+        }
+    }
+
+    public function update() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $update_tour = $this->tour_model->update(
+                trim($_POST['id']),
+                trim($_POST['creator']),
+                trim($_POST['tour_name']),
+                trim($_POST['type']),
+                trim($_POST['status']),
+                trim($_POST['departure']),
+                trim($_POST['destination']),
+                trim($_POST['during']),
+                trim($_POST['members']),
+                trim($_POST['note']),
+                trim($_POST['image'])
+            );
+            echo json_encode($update_tour);
         }
     }
 
@@ -48,41 +56,28 @@ class TourController extends BaseController {
         }
     }
 
-    public function load_my_tours() {
+    public function load_my_username() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $username = $_GET['username'];
-            $tours = $this->tour_model->load_my_tours($username);
+            $tours = $this->tour_model->load_by_username($_GET['username']);
             echo json_encode($tours);
         }
     }
 
-    public function load_by_position() {
+    public function get_detail() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $position = $_GET['position'];
-            $tour = $this->tour_model->load_by_position($position);
+            $tour = $this->tour_model->load_by_position(
+                $_GET['position'],
+                $_GET['keyword']
+            );
             echo json_encode($tour);
         }
     }
 
-    public function comment() {
+    public function search() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-            $data = array(
-                'tour_id' => trim($_POST['tour_id']),
-                'username' => trim($_POST['username']),
-                'content' => trim($_POST['content'])
-            );
-            $comment = $this->tour_model->comment($data['tour_id'], $data['username'], $data['content']);
-            echo $comment;
-        }
-    }
-
-    public function load_comments() {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $id = intval($_GET['id']);
-            $comments = $this->tour_model->load_comments($id);
-            echo json_encode($comments);
+            $tours = $this->tour_model->search(trim($_POST['keyword']));
+            echo json_encode($tours);
         }
     }
 }

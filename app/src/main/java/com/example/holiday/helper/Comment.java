@@ -1,9 +1,9 @@
 package com.example.holiday.helper;
 
 public class Comment {
-    private String avatar;
-    private String fullname;
-    private String content;
+    private final String avatar;
+    private final String fullname;
+    private final String content;
 
     public Comment(String avatar, String fullname, String content) {
         this.avatar = avatar;

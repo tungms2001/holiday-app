@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.holiday.helper.CircleTransform;
 import com.example.holiday.helper.Session;
 import com.google.android.gms.common.util.Base64Utils;
 import com.squareup.picasso.Picasso;
@@ -30,7 +30,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -112,7 +111,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
 
             if (body != null) {
-                String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=update";
+                String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=update";
                 Request request = new Request.Builder()
                         .url(url)
                         .post(body)
@@ -123,8 +122,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
                     @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    }
+                    public void onResponse(@NotNull Call call, @NotNull Response response) { }
                 });
             }
             finish();
@@ -135,9 +133,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                 ivUpdateAvatar.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,7 +157,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         session = new Session(UpdateProfileActivity.this);
         OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=detail&username=" + session.getUsername();
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=get_detail&username=" + session.getUsername();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -170,24 +167,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                    UpdateProfileActivity.this.runOnUiThread(() -> {
-                        try {
-                            String url = "http://10.0.2.2:8080/holidayapp/server/" + jsonObject.getString("avatar");
-                            Picasso.get().load(url).into(ivUpdateAvatar);
-                            txtUpdateFullname.setText(jsonObject.getString("fullname"));
-                            tvUsername.setText(session.getUsername());
-                            txtUpdateEmail.setText(jsonObject.getString("email"));
-                            txtUpdatePhone.setText(jsonObject.getString("phone"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                UpdateProfileActivity.this.runOnUiThread(() -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String url = "http://10.0.2.2:8080/holidayapp/server/" + jsonObject.getString("avatar");
+                        Picasso.get().load(url).transform(new CircleTransform()).into(ivUpdateAvatar);
+                        txtUpdateFullname.setText(jsonObject.getString("fullname"));
+                        tvUsername.setText(String.format(getString(R.string.at), session.getUsername()));
+                        txtUpdateEmail.setText(jsonObject.getString("email"));
+                        txtUpdatePhone.setText(jsonObject.getString("phone"));
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
         });
     }

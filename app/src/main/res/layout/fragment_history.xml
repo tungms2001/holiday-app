@@ -8,7 +8,7 @@
     tools:context=".fragment.HistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_my_tours"
+        android:id="@+id/rv_tours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"

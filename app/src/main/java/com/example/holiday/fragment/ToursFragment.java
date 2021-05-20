@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.holiday.CreateTourActivity;
 import com.example.holiday.R;
 import com.example.holiday.TourDetailActivity;
 import com.example.holiday.helper.RecyclerItemClickListener;
-import com.example.holiday.helper.Session;
 import com.example.holiday.helper.Tour;
 import com.example.holiday.helper.TourRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,14 +33,16 @@ import java.util.Vector;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ToursFragment extends Fragment {
 
-    Session session;
     private List<Tour> tours;
+    private SearchView svTour;
     private RecyclerView rvTours;
     private FloatingActionButton fabCreateTour;
 
@@ -53,6 +55,7 @@ public class ToursFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        svTour = view.findViewById(R.id.sv_tour);
         rvTours = view.findViewById(R.id.rv_tours);
         fabCreateTour = view.findViewById(R.id.fab_create_tour);
         tours = new Vector<>();
@@ -65,24 +68,55 @@ public class ToursFragment extends Fragment {
 
         rvTours.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), rvTours, (v, position) ->  {
             Intent intent = new Intent(getActivity(), TourDetailActivity.class);
+            if (!svTour.getQuery().toString().isEmpty())
+                intent.putExtra("keyword", svTour.getQuery().toString());
             intent.putExtra("position", position);
             startActivity(intent);
         }));
+
+        svTour.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) { return false; }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                if (newText.isEmpty())
+                    loadAll();
+                return false;
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshData();
+        loadAll();
     }
 
-    private void refreshData() {
-        tours.clear();
-        OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=Tour&action=load_all";
+    private void loadAll() {
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=load_all";
         Request request = new Request.Builder()
                 .url(url)
                 .build();
+        refreshData(request);
+    }
+
+    private void search(String query) {
+        RequestBody body = new FormBody.Builder()
+                .add("keyword", query)
+                .build();
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=search";
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        refreshData(request);
+    }
+
+    private void refreshData(Request request) {
+        tours.clear();
+        OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
@@ -93,19 +127,17 @@ public class ToursFragment extends Fragment {
                     JSONArray jsonArray = new JSONArray(response.body().string());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Tour tour = new Tour();
-                        tour.setImage(jsonObject.getString("image"));
-                        tour.setTourName(jsonObject.getString("tour_name"));
-                        tour.setType(jsonObject.getString("type"));
-                        tour.setDuring(jsonObject.getString("during"));
-                        tour.setStatus(jsonObject.getString("status"));
-                        tours.add(tour);
+                        tours.add(new Tour(
+                                jsonObject.getString("tour_name"),
+                                jsonObject.getString("type"),
+                                jsonObject.getString("status"),
+                                jsonObject.getString("during"),
+                                jsonObject.getString("image")
+                        ));
                     }
-
-                    TourRecyclerViewAdapter adapter = new TourRecyclerViewAdapter(getActivity(), tours);
-
                     getActivity().runOnUiThread(() -> {
                         rvTours.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        TourRecyclerViewAdapter adapter = new TourRecyclerViewAdapter(getActivity(), tours);
                         rvTours.setAdapter(adapter);
                     });
                 } catch (JSONException e) {

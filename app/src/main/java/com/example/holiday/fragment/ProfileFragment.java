@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.holiday.R;
 import com.example.holiday.UpdateProfileActivity;
+import com.example.holiday.helper.CircleTransform;
 import com.example.holiday.helper.Session;
 import com.google.android.gms.common.util.Base64Utils;
 import com.squareup.picasso.Picasso;
@@ -37,6 +38,8 @@ import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
 
+    private Session session;
+
     private ImageView ivAvatar;
     private TextView tvFullname;
     private TextView tvUsername;
@@ -44,9 +47,6 @@ public class ProfileFragment extends Fragment {
     private TextView tvPhone;
     private Button btnUpdate;
     private Button btnLogout;
-
-    private Session session;
-    private String username;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class ProfileFragment extends Fragment {
         btnUpdate = view.findViewById(R.id.btn_update);
         btnLogout = view.findViewById(R.id.btn_logout);
 
+        session = new Session(getActivity());
         refreshData();
 
         btnUpdate.setOnClickListener(v -> {
@@ -86,38 +87,31 @@ public class ProfileFragment extends Fragment {
     }
 
     private void refreshData() {
-        session = new Session(getActivity());
-        username = session.getUsername();
-
         OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=detail&username=" + username;
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=get_detail&username=" + session.getUsername();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
-                    getActivity().runOnUiThread(() -> {
-                        try {
-                            String url = "http://10.0.2.2:8080/holidayapp/server/" + jsonObject.getString("avatar");
-                            Picasso.get().load(url).into(ivAvatar);
-                            tvFullname.setText(jsonObject.getString("fullname"));
-                            tvUsername.setText(username);
-                            tvEmail.setText(jsonObject.getString("email"));
-                            tvPhone.setText(jsonObject.getString("phone"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                getActivity().runOnUiThread(() -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String url = "http://10.0.2.2/travelholic-app/server/" + jsonObject.getString("avatar");
+                        Picasso.get().load(url).transform(new CircleTransform()).into(ivAvatar);
+                        tvFullname.setText(jsonObject.getString("fullname"));
+                        tvUsername.setText(String.format(getString(R.string.at), session.getUsername()));
+                        tvEmail.setText(jsonObject.getString("email"));
+                        tvPhone.setText(jsonObject.getString("phone"));
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             }
         });
     }

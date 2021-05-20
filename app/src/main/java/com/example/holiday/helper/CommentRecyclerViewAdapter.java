@@ -19,12 +19,10 @@ import java.util.List;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
 
-    private Context context;
-    private LayoutInflater inflater;
-    private List<Comment> comments;
+    private final LayoutInflater inflater;
+    private final List<Comment> comments;
 
     public CommentRecyclerViewAdapter(Context context, List<Comment> comments) {
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.comments = comments;
     }
@@ -40,7 +38,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         String url = "http://10.0.2.2:8080/holidayapp/server/" + comments.get(position).getAvatar();
-        Picasso.get().load(url).into(holder.ivAvatar);
+        Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);
         holder.tvFullname.setText(comments.get(position).getFullname());
         holder.tvContent.setText(comments.get(position).getContent());
     }
@@ -50,11 +48,11 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         return comments.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public final class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView ivAvatar;
-        private TextView tvFullname;
-        private TextView tvContent;
+        private final ImageView ivAvatar;
+        private final TextView tvFullname;
+        private final TextView tvContent;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);

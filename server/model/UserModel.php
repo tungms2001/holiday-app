@@ -26,7 +26,7 @@ class UserModel{
         return $data;
     }
 
-    public function detail($username) {
+    public function get_detail($username) {
         $query = "SELECT * FROM user WHERE username = '$username'";
         $result = $this->conn->query($query);
         if ($result->num_rows > 0) {

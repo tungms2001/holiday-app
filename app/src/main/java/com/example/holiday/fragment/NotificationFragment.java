@@ -35,6 +35,7 @@ import okhttp3.Response;
 public class NotificationFragment extends Fragment {
 
     private Session session;
+    private List<Notification> notifications;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,9 +48,10 @@ public class NotificationFragment extends Fragment {
 
         RecyclerView rvNotification = view.findViewById(R.id.rv_my_notifications);
         session = new Session(getActivity());
+        notifications = new Vector<>();
 
         OkHttpClient client = new OkHttpClient();
-        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=Notification&action=load_all&username=" + session.getUsername();
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=notification&action=load_all&username=" + session.getUsername();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -58,26 +60,26 @@ public class NotificationFragment extends Fragment {
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                getActivity().runOnUiThread(() -> {
-                    try {
-                        List<Notification> notifications = new Vector<>();
-                        JSONArray jsonArray = new JSONArray(response.body().string());
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            notifications.add(new Notification(
-                                    jsonObject.getString("avatar"),
-                                    jsonObject.getString("sender"),
-                                    jsonObject.getString("tour_name"),
-                                    jsonObject.getString("type")));
-                        }
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response.body().string());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        notifications.add(new Notification(
+                                jsonObject.getString("avatar"),
+                                jsonObject.getString("sender"),
+                                jsonObject.getString("tour_name"),
+                                jsonObject.getString("type"))
+                        );
+                    }
+                    getActivity().runOnUiThread(() -> {
                         NotificationRecyclerViewAdapter adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
                         rvNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvNotification.setAdapter(adapter);
-                    } catch (JSONException | IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+                    });
+                } catch (JSONException | IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -16,7 +16,8 @@
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:background="@drawable/ic_user"/>
+            android:background="@drawable/ic_user"
+            android:scaleType="centerCrop"/>
 
         <EditText
             android:id="@+id/txt_update_fullname"

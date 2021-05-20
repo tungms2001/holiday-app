@@ -82,6 +82,9 @@ ALTER TABLE password_reset
     FOREIGN KEY (email) REFERENCES user(email);
 
 ALTER TABLE tour
+    ADD FULLTEXT (tour_name, departure, destination, note);
+
+ALTER TABLE tour
     ADD CONSTRAINT CHK_TOUR_STATUS
     CHECK (status IN ('Open', 'Closed', 'In-progress', 'Prepared', 'Done', 'Delayed'));
 

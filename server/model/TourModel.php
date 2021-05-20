@@ -8,11 +8,7 @@ class TourModel extends Database {
     }
 
     public function create($creator, $tour_name, $type, $status, $departure, $destination, $during, $members, $note, $image) {
-        $bitmap_data = base64_decode($image);
-        $img = imagecreatefromstring($bitmap_data);
-        $img_path = 'data/img/tour/' . hash('md5', $bitmap_data) . '.png';
-        imagepng($img, $img_path);
-
+        $img_path = $this->store_image($image);
         $id_query = "SELECT AUTO_INCREMENT " .
             "FROM  INFORMATION_SCHEMA.TABLES " .
             "WHERE TABLE_SCHEMA = 'holidayapp' AND TABLE_NAME = 'tour'";
@@ -23,57 +19,68 @@ class TourModel extends Database {
             "VALUES ('$creator', '$tour_name', '$type', '$status', '$departure', '$destination', '$during', '$note', '$img_path', NOW(), NOW())";
         $this->conn->query($tour_query);
 
-        $list_users = explode(' ', $members);
-        array_push($list_users, $creator);
-        foreach ($list_users as $item) {
-            $member_query = "INSERT INTO member (tour_id, user) VALUES ($id, '$item')";
-            $this->conn->query($member_query);
-        }
+        $this->join_tour($id, $members, $creator);
+        return array('success' => true);
+    }
 
-        return array('success' => true, 'message' => "Tour created successfully!");
+    public function update($id, $creator, $tour_name, $type, $status, $departure, $destination, $during, $members, $note, $image) {
+        $img_path = $this->store_image($image);
+        $update_tour_query = "UPDATE tour " .
+            "SET tour_name = '$tour_name', " .
+            "type = '$type', " .
+            "status = '$status', " .
+            "departure = '$departure', " .
+            "destination = '$destination', " .
+            "during = '$during', " .
+            "note = '$note' " .
+            "image = '$img_path' " .
+            "updated_at = NOW() " .
+            "WHERE id = $id";
+        $this->conn->query($update_tour_query);
+
+        $reset_members_query = "DELETE FROM member WHERE tour_id = $id";
+        $this->conn->query($reset_members_query);
+
+        $this->join_tour($id, $members, $creator);
+        return array('success' => true);
     }
 
     public function load_all() {
-        $select_query = "SELECT tour_name, type, status, during, image FROM tour";
+        $select_query = "SELECT tour_name, type, status, during, image FROM tour ORDER BY id DESC";
         $result = $this->conn->query($select_query);
-
-        $tours = array();
-        while ($row = $result->fetch_assoc()) {
-            $tour = array(
-                'tour_name' => $row['tour_name'],
-                'type' => $row['type'],
-                'status' => $row['status'],
-                'during' => $row['during'],
-                'image' => $row['image']
-            );
-            array_push($tours, $tour);
-        }
-        return $tours;
+        return $this->to_tours_array($result);
     }
 
-    public function load_my_tours($username) {
+    public function load_by_username($username)
+    {
         $select_query = "SELECT tour_name, type, status, during, image " .
             "FROM tour, member " .
             "WHERE tour.id = member.tour_id AND " .
             "member.user = '$username'";
         $result = $this->conn->query($select_query);
-
-        $tours = array();
-        while ($row = $result->fetch_assoc()) {
-            $tour = array(
-                'tour_name' => $row['tour_name'],
-                'type' => $row['type'],
-                'status' => $row['status'],
-                'during' => $row['during'],
-                'image' => $row['image']
-            );
-            array_push($tours, $tour);
-        }
-        return $tours;
+        return $this->to_tours_array($result);
     }
 
-    public function load_by_position($position) {
-        $select_query = "SELECT * FROM tour ORDER BY id LIMIT $position,1";
+    public function search($keyword) {
+        $search_query = "SELECT tour_name, type, status, during, image " .
+            "FROM tour " .
+            "WHERE MATCH (tour_name, departure, destination, note) " .
+            "AGAINST ('$keyword') " .
+            "ORDER BY id DESC";
+        $result = $this->conn->query($search_query);
+        return $this->to_tours_array($result);
+    }
+
+    public function load_by_position($position, $keyword) {
+        if (empty($keyword))
+            $select_query = "SELECT * FROM tour ORDER BY id DESC LIMIT $position,1";
+        else
+            $select_query = "SELECT * " .
+                "FROM tour " .
+                "WHERE MATCH (tour_name, departure, destination, note) " .
+                "AGAINST ('$keyword') " .
+                "ORDER BY id DESC " .
+                "LIMIT $position,1";
         $result = $this->conn->query($select_query);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -93,32 +100,41 @@ class TourModel extends Database {
             return $tour;
         }
         else
-            return array("success" => false);
+            return array('success' => false);
     }
 
-    public function comment($tour_id, $username, $content) {
-        $insert_query = "INSERT INTO tour_comment (user, tour_id, content, created_at, deleted_at) " .
-            "VALUES ('$username', '$tour_id', '$content', NOW(), NOW())";
-        $this->conn->query($insert_query);
-        return array("success" => true);
-    }
-
-    public function load_comments($id) {
-        $select_query = "SELECT tour_comment.tour_id, user.fullname, user.avatar, tour_comment.content " .
-            "FROM tour_comment, user " .
-            "WHERE tour_comment.user = user.username AND " .
-            "tour_comment.tour_id = $id " .
-            "ORDER BY tour_comment.tour_id";
-        $result = $this->conn->query($select_query);
-        $comments = array();
-        while ($row = $result->fetch_assoc()) {
-            $comment = array(
-                'fullname' => $row['fullname'],
-                'avatar' => $row['avatar'],
-                'content' => $row['content']
-            );
-            array_push($comments, $comment);
+    // insert username and tour_id into `member`
+    private function join_tour($id, $members, $creator) {
+        $list_users = explode(' ', $members . ' ' . $creator);
+        foreach ($list_users as $item) {
+            $member_query = "INSERT INTO member (tour_id, user) VALUES ($id, '$item')";
+            $this->conn->query($member_query);
         }
-        return $comments;
+    }
+
+    // explode mysql result table into php array
+    private function to_tours_array($result) {
+        $tours = array();
+        while ($row = $result->fetch_assoc()) {
+            $tour = array(
+                'tour_name' => $row['tour_name'],
+                'type' => $row['type'],
+                'status' => $row['status'],
+                'during' => $row['during'],
+                'image' => $row['image']
+            );
+            array_push($tours, $tour);
+        }
+        return $tours;
+    }
+
+    // store image path in database
+    private function store_image($image) {
+        $bitmap_data = base64_decode($image);
+        $img = imagecreatefromstring($bitmap_data);
+        $img_path = 'data/img/tour/' . hash('md5', $bitmap_data) . '.png';
+        imagepng($img, $img_path);
+        imagedestroy($img);
+        return $img_path;
     }
 }

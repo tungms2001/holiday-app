@@ -1,6 +1,5 @@
 package com.example.holiday.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,12 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.holiday.CreateTourActivity;
 import com.example.holiday.R;
 import com.example.holiday.helper.Session;
 import com.example.holiday.helper.Tour;
 import com.example.holiday.helper.TourRecyclerViewAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -40,11 +37,10 @@ public class HistoryFragment extends Fragment {
     private Session session;
     private List<Tour> tours;
     private RecyclerView rvTours;
-    private FloatingActionButton fabCreateTour;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tours, container, false);
+        return inflater.inflate(R.layout.fragment_history, container, false);
     }
 
     @Override
@@ -53,13 +49,13 @@ public class HistoryFragment extends Fragment {
 
         rvTours = view.findViewById(R.id.rv_tours);
         tours = new Vector<>();
+        session = new Session(getActivity());
         refreshData();
     }
 
     private void refreshData() {
         OkHttpClient client = new OkHttpClient();
-        Session session = new Session(getActivity());
-        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=Tour&action=load_my_tours&username=" + session.getUsername();
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=load_by_username&username=" + session.getUsername();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -73,13 +69,13 @@ public class HistoryFragment extends Fragment {
                     JSONArray jsonArray = new JSONArray(response.body().string());
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        Tour tour = new Tour();
-                        tour.setImage(jsonObject.getString("image"));
-                        tour.setTourName(jsonObject.getString("tour_name"));
-                        tour.setType(jsonObject.getString("type"));
-                        tour.setDuring(jsonObject.getString("during"));
-                        tour.setStatus(jsonObject.getString("status"));
-                        tours.add(tour);
+                        tours.add(new Tour(
+                                jsonObject.getString("tour_name"),
+                                jsonObject.getString("type"),
+                                jsonObject.getString("status"),
+                                jsonObject.getString("during"),
+                                jsonObject.getString("image")
+                        ));
                     }
                     getActivity().runOnUiThread(() -> {
                         TourRecyclerViewAdapter adapter = new TourRecyclerViewAdapter(getActivity(), tours);

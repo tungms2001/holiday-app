@@ -20,13 +20,10 @@ import java.util.List;
 
 public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<NotificationRecyclerViewAdapter.ViewHolder> {
 
-    private Context context;
-    private LayoutInflater inflater;
-    private List<Notification> notifications;
-
+    private final LayoutInflater inflater;
+    private final List<Notification> notifications;
 
     public NotificationRecyclerViewAdapter(Context context, List<Notification> notifications) {
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.notifications = notifications;
     }
@@ -55,10 +52,10 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         return notifications.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView ivAvatar;
-        private TextView tvContent;
+        private static ImageView ivAvatar;
+        private static TextView tvContent;
         private Button btnAccept;
 
         public ViewHolder(@NonNull @NotNull View itemView) {

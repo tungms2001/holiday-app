@@ -19,12 +19,10 @@ import java.util.List;
 
 public class TourRecyclerViewAdapter extends RecyclerView.Adapter<TourRecyclerViewAdapter.ViewHolder> {
 
-    private Context context;
-    private LayoutInflater inflater;
-    private List<Tour> tours;
+    private final LayoutInflater inflater;
+    private final List<Tour> tours;
 
     public TourRecyclerViewAdapter(Context context, List<Tour> tours) {
-        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.tours = tours;
     }
@@ -52,13 +50,13 @@ public class TourRecyclerViewAdapter extends RecyclerView.Adapter<TourRecyclerVi
         return tours.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView ivAvatar;
-        private TextView tvName;
-        private TextView tvDuring;
-        private TextView tvStatus;
-        private TextView tvType;
+        private final ImageView ivAvatar;
+        private final TextView tvName;
+        private final TextView tvDuring;
+        private final TextView tvStatus;
+        private final TextView tvType;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
