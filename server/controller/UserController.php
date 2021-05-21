@@ -19,6 +19,13 @@ class UserController extends BaseController{
         }
     }
 
+    public function get_all_usernames() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $all_usernames = $this->user_model->get_all_usernames();
+            echo json_encode($all_usernames);
+        }
+    }
+    
     public function get_detail() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $user_detail = $this->user_model->get_detail($_GET['username']);

@@ -11,7 +11,7 @@ class UserModel{
         $query = "SELECT * " . "FROM user " .
                 "WHERE (username = '$account' OR email = '$account' OR phone = '$account') AND password = '$password'";
         $result = $this->conn->query($query);
-        $data = null;
+        $data = array();
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $data = array(
@@ -24,6 +24,21 @@ class UserModel{
         else
             $data = array('success' => false);
         return $data;
+    }
+
+    public function get_all_usernames() {
+        $get_usernames_query = "SELECT username FROM user ORDER BY username";
+        $result = $this->conn->query($get_usernames_query);
+        $usernames = array();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $username = array('username' => $row['username']);
+                array_push($usernames, $username);
+            }
+        }
+        else
+            $usernames = array('success' => false);
+        return $usernames;
     }
 
     public function get_detail($username) {

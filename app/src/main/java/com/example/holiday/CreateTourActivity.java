@@ -5,25 +5,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.holiday.helper.Session;
 import com.google.android.gms.common.util.Base64Utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,6 +42,8 @@ public class CreateTourActivity extends AppCompatActivity {
     private static final int SELECT_PHOTO = 1;
     private Bitmap bitmap;
     private Session session;
+    private List<String> usernames;
+    private List<String> temporaryUsernames;
 
     private EditText txtTourName;
     private Spinner spnTourType;
@@ -45,7 +51,10 @@ public class CreateTourActivity extends AppCompatActivity {
     private EditText txtTourDeparture;
     private EditText txtTourDestination;
     private EditText txtTourDuring;
-    private EditText txtTourMembers;
+    private AutoCompleteTextView actvMember;
+    private Button btnAddMember;
+    private Button btnResetMember;
+    private TextView tvTourMembers;
     private EditText txtTourNote;
     private Button btnTourImage;
     private ImageView ivTourImage;
@@ -56,13 +65,29 @@ public class CreateTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tour);
         map();
-        initSpinnerAdapter();
+        initAdapter();
         session = new Session(CreateTourActivity.this);
 
         btnTourImage.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent, SELECT_PHOTO);
+        });
+
+        btnAddMember.setOnClickListener(v -> {
+            int index = isValidUsername(actvMember.getText().toString());
+            if (index != -1) {
+                String newMembers = tvTourMembers.getText().toString() + " " + actvMember.getText().toString();
+                tvTourMembers.setText(newMembers);
+                actvMember.setText("");
+                temporaryUsernames.remove(index);
+            }
+        });
+
+        btnResetMember.setOnClickListener(v -> {
+            temporaryUsernames = new Vector<>(usernames);
+            tvTourMembers.setText("");
+            actvMember.setText("");
         });
 
         btnCreate.setOnClickListener(v -> {
@@ -80,7 +105,7 @@ public class CreateTourActivity extends AppCompatActivity {
                     .addFormDataPart("departure", txtTourDeparture.getText().toString())
                     .addFormDataPart("destination", txtTourDestination.getText().toString())
                     .addFormDataPart("during", txtTourDuring.getText().toString())
-                    .addFormDataPart("members", txtTourMembers.getText().toString())
+                    .addFormDataPart("members", tvTourMembers.getText().toString())
                     .addFormDataPart("note", txtTourNote.getText().toString())
                     .addFormDataPart("image", base64Data)
                     .build();
@@ -131,13 +156,17 @@ public class CreateTourActivity extends AppCompatActivity {
         txtTourDeparture = findViewById(R.id.txt_tour_departure);
         txtTourDestination = findViewById(R.id.txt_tour_destination);
         txtTourDuring = findViewById(R.id.txt_tour_during);
-        txtTourMembers = findViewById(R.id.txt_tour_members);
+        actvMember = findViewById(R.id.actv_member);
+        btnAddMember = findViewById(R.id.btn_add_member);
+        btnResetMember = findViewById(R.id.btn_reset_member);
+        tvTourMembers = findViewById(R.id.tv_members);
         txtTourNote = findViewById(R.id.txt_tour_note);
         btnTourImage = findViewById(R.id.btn_tour_image);
         ivTourImage = findViewById(R.id.iv_tour_image);
         btnCreate = findViewById(R.id.btn_tour_create);
     }
-    private void initSpinnerAdapter() {
+
+    private void initAdapter() {
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(
                 CreateTourActivity.this, R.array.tour_type, R.layout.support_simple_spinner_dropdown_item);
         spnTourType.setAdapter(typeAdapter);
@@ -145,5 +174,40 @@ public class CreateTourActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(
                 CreateTourActivity.this, R.array.tour_status, R.layout.support_simple_spinner_dropdown_item);
         spnTourStatus.setAdapter(statusAdapter);
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=get_all_usernames";
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) { }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) {
+                CreateTourActivity.this.runOnUiThread(() -> {
+                    try {
+                        JSONArray jsonArray = new JSONArray(response.body().string());
+                        usernames = new Vector<>();
+                        for (int i = 0; i < jsonArray.length(); i++)
+                            usernames.add(jsonArray.getJSONObject(i).getString("username"));
+                        temporaryUsernames = new Vector<>(usernames);
+                        ArrayAdapter<String> usernameAdapter =
+                                new ArrayAdapter<>(CreateTourActivity.this, R.layout.support_simple_spinner_dropdown_item, usernames);
+                        actvMember.setAdapter(usernameAdapter);
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
+    }
+
+    private int isValidUsername(String username) {
+        for (int i = 0; i < temporaryUsernames.size(); i++)
+            if (temporaryUsernames.get(i).equals(username))
+                return i;
+        return -1;
     }
 }

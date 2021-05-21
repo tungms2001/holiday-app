@@ -97,6 +97,23 @@ class TourModel extends Database {
                 'image' => $row['image'],
                 'note' => $row['note'],
             );
+
+            $get_members_query = "SELECT username, avatar " .
+                "FROM user, member " .
+                "WHERE user.username = member.user AND " .
+                "member.tour_id = " . $row['id'];
+            $result = $this->conn->query($get_members_query);
+            $members = array();
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $member = array(
+                        'username' => $row['username'],
+                        'avatar' => $row['avatar']
+                    );
+                    array_push($members, $member);
+                }
+            }
+            $tour['members'] = $members;
             return $tour;
         }
         else
