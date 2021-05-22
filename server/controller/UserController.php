@@ -1,14 +1,14 @@
 <?php
-class UserController extends BaseController{
+class UserController extends BaseController {
     private UserModel $user_model;
 
     public function __construct() {
-        $this->model("UserModel");
+        $this->model('UserModel');
         $this->user_model = new UserModel();
     }
 
     public function login() {
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $login_user = $this->user_model->login(
@@ -25,7 +25,7 @@ class UserController extends BaseController{
             echo json_encode($all_usernames);
         }
     }
-    
+
     public function get_detail() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $user_detail = $this->user_model->get_detail($_GET['username']);

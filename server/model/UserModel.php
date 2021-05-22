@@ -1,5 +1,5 @@
 <?php
-class UserModel{
+class UserModel {
     private $conn;
 
     public function __construct() {
@@ -7,9 +7,9 @@ class UserModel{
         $this->conn = $db->connect();
     }
 
-    public function login($account, $password){
-        $query = "SELECT * " . "FROM user " .
-                "WHERE (username = '$account' OR email = '$account' OR phone = '$account') AND password = '$password'";
+    public function login($account, $password) {
+        $query = "SELECT * FROM user " .
+            "WHERE (username = '$account' OR email = '$account' OR phone = '$account') AND password = '$password'";
         $result = $this->conn->query($query);
         $data = array();
         if ($result->num_rows > 0) {

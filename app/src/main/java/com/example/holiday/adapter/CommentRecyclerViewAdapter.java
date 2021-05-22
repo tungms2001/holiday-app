@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.holiday.R;
+import com.example.holiday.helper.CircleTransform;
+import com.example.holiday.model.Comment;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +50,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         return comments.size();
     }
 
-    public final class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView ivAvatar;
         private final TextView tvFullname;

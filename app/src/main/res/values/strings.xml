@@ -1,27 +1,27 @@
 <resources>
-    <string name="app_name">Holiday</string>
+    <string name="app_name">Travelholic</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
-    <string name="account">Account</string>
+    <string name="account">Email/Phone</string>
     <string name="password">Password</string>
-    <string name="full_name">Full name</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="signup">Sign Up</string>
-    <string name="forget_password">Forget Password</string>
-    <string name="via_sms">Via sms</string>
-    <string name="via_email">Via email</string>
-    <string name="account_hint">Enter your email/phone number</string>
+    <string name="full_name">Full name</string>
+    <string name="signup">Sign up</string>
+    <string name="forget_password">Select method you want to request your password</string>
+    <string name="via_sms">Via SMS</string>
+    <string name="via_email">Via Email</string>
     <string name="submit">Submit</string>
+    <string name="account_hint">Enter your email/password</string>
     <string name="trips">Trips</string>
+    <string name="save">Save</string>
     <string name="change_password">Change password</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
-    <string name="save">Save</string>
     <string name="tour_name">Tour name</string>
-    <string name="stop_points">Stop points</string>
     <string name="create">Create</string>
+    <string name="stop_points">Stop points</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="or">Or</string>
     <string name="username">Username</string>
@@ -30,8 +30,6 @@
     <string name="update_image">Update image</string>
     <string name="during">During</string>
     <string name="type">Type</string>
-    <string name="departure">Departure</string>
-    <string name="destination">Destination</string>
     <string name="members">Members</string>
     <string name="update_profile">Update profile</string>
     <string name="send">Send</string>
@@ -43,7 +41,7 @@
     <string name="apply">Apply</string>
     <string name="update">Update</string>
     <string name="add">Add</string>
-    <string name="reset">Reset</string>
+    <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="from">From</string>
     <string name="to">TO</string>
@@ -68,7 +66,5 @@
         <item>Prepared</item>
         <item>Delayed</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

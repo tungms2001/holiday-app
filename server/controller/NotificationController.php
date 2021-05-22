@@ -2,13 +2,12 @@
 class NotificationController extends BaseController {
     private NotificationModel $notification_model;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->model('NotificationModel');
         $this->notification_model = new NotificationModel();
     }
 
-    public function apply(){
+    public function apply() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $apply = $this->notification_model->apply(
                 intval($_GET['tour_id']),

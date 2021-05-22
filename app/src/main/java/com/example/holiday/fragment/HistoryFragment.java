@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.holiday.R;
 import com.example.holiday.helper.Session;
-import com.example.holiday.helper.Tour;
-import com.example.holiday.helper.TourRecyclerViewAdapter;
+import com.example.holiday.model.Tour;
+import com.example.holiday.adapter.TourRecyclerViewAdapter;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -36,6 +36,7 @@ public class HistoryFragment extends Fragment {
 
     private Session session;
     private List<Tour> tours;
+
     private RecyclerView rvTours;
 
     @Override
@@ -48,6 +49,7 @@ public class HistoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvTours = view.findViewById(R.id.rv_tours);
+
         tours = new Vector<>();
         session = new Session(getActivity());
         refreshData();
@@ -56,9 +58,7 @@ public class HistoryFragment extends Fragment {
     private void refreshData() {
         OkHttpClient client = new OkHttpClient();
         String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=load_by_username&username=" + session.getUsername();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+        Request request = new Request.Builder().url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }

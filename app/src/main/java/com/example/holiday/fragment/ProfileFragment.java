@@ -97,12 +97,11 @@ public class ProfileFragment extends Fragment {
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
             @Override
-
             public void onResponse(@NotNull Call call, @NotNull Response response) {
                 getActivity().runOnUiThread(() -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
-                        String url = "http://10.0.2.2/travelholic-app/server/" + jsonObject.getString("avatar");
+                        String url = "http://10.0.2.2:8080/holidayapp/server/" + jsonObject.getString("avatar");
                         Picasso.get().load(url).transform(new CircleTransform()).into(ivAvatar);
                         tvFullname.setText(jsonObject.getString("fullname"));
                         tvUsername.setText(String.format(getString(R.string.at), session.getUsername()));

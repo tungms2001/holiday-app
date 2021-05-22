@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.model;
 
 public class Tour {
     private String tourName;
@@ -34,5 +34,4 @@ public class Tour {
     public String getImage() {
         return image;
     }
-
 }

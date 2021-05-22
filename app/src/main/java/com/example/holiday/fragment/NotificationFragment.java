@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.holiday.R;
-import com.example.holiday.helper.Notification;
-import com.example.holiday.helper.NotificationRecyclerViewAdapter;
+import com.example.holiday.model.Notification;
+import com.example.holiday.adapter.NotificationRecyclerViewAdapter;
 import com.example.holiday.helper.Session;
 
 import org.jetbrains.annotations.NotNull;

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_list));
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_notification));
         tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_history_clock));
-        tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_user));
+        tlMain.addTab(tlMain.newTab().setIcon(R.drawable.ic_profile));
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new ToursFragment());

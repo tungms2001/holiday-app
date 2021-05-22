@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.holiday.R;
+import com.example.holiday.model.Tour;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;

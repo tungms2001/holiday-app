@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.holiday.R;
+import com.example.holiday.model.Notification;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,8 +55,8 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private static ImageView ivAvatar;
-        private static TextView tvContent;
+        private final ImageView ivAvatar;
+        private final TextView tvContent;
         private Button btnAccept;
 
         public ViewHolder(@NonNull @NotNull View itemView) {

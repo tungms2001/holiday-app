@@ -3,8 +3,6 @@ package com.example.holiday;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
@@ -50,8 +48,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                             .build();
                     client.newCall(request).enqueue(new Callback() {
                         @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        }
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -62,7 +59,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                         }
                     });
                 }
-            } else {
+            }
+            else {
                 if (!txtInput.getText().toString().isEmpty()) {
                     RequestBody body = new FormBody.Builder()
                             .add("code", txtInput.getText().toString())
@@ -73,8 +71,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                             .build();
                     client.newCall(request).enqueue(new Callback() {
                         @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        }
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) {

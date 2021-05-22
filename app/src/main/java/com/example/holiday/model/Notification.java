@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.model;
 
 public class Notification {
     private final String avatar;

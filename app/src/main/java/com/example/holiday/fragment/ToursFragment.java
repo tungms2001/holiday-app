@@ -18,8 +18,8 @@ import com.example.holiday.CreateTourActivity;
 import com.example.holiday.R;
 import com.example.holiday.TourDetailActivity;
 import com.example.holiday.helper.RecyclerItemClickListener;
-import com.example.holiday.helper.Tour;
-import com.example.holiday.helper.TourRecyclerViewAdapter;
+import com.example.holiday.model.Tour;
+import com.example.holiday.adapter.TourRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +42,7 @@ import okhttp3.Response;
 public class ToursFragment extends Fragment {
 
     private List<Tour> tours;
+
     private SearchView svTour;
     private RecyclerView rvTours;
     private FloatingActionButton fabCreateTour;
@@ -62,7 +63,7 @@ public class ToursFragment extends Fragment {
 
         fabCreateTour.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CreateTourActivity.class);
-            intent.putExtra("create", false);
+            intent.putExtra("mode", "create");
             startActivity(intent);
         });
 
@@ -136,8 +137,8 @@ public class ToursFragment extends Fragment {
                         ));
                     }
                     getActivity().runOnUiThread(() -> {
-                        rvTours.setLayoutManager(new LinearLayoutManager(getActivity()));
                         TourRecyclerViewAdapter adapter = new TourRecyclerViewAdapter(getActivity(), tours);
+                        rvTours.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvTours.setAdapter(adapter);
                     });
                 } catch (JSONException e) {

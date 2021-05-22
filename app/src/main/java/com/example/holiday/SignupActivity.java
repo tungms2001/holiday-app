@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +17,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-
-import javax.xml.transform.Result;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,7 +44,6 @@ public class SignupActivity extends AppCompatActivity {
 
         btnSignup.setOnClickListener(v -> {
             List<String> listPrompts = new Vector<>();
-
             if (txtFullname.getText().toString().isEmpty())
                 listPrompts.add(getString(R.string.full_name));
             if (txtUsername.getText().toString().isEmpty())
@@ -72,7 +68,7 @@ public class SignupActivity extends AppCompatActivity {
                                 .add("phone", txtPhone.getText().toString())
                                 .add("password", txtPassword.getText().toString())
                                 .build();
-                        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=User&action=signup";
+                        String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=signup";
                         Request request = new Request.Builder()
                                 .url(url)
                                 .post(body)

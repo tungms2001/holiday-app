@@ -9,7 +9,7 @@
         android:id="@+id/iv_avatar"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/tour_image_background"
+        android:background="@color/green_shamrock"
         android:scaleType="centerCrop"/>
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_avatar"
         android:padding="15dp"
-        android:background="@drawable/tour_info_background">
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/rl_tour_name"
@@ -40,7 +40,6 @@
                 android:textSize="20sp"/>
 
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/rl_during"

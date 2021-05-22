@@ -23,7 +23,6 @@ class TourController extends BaseController {
                 trim($_POST['note']),
                 trim($_POST['image'])
             );
-
             echo json_encode($create_tour);
         }
     }
@@ -34,7 +33,6 @@ class TourController extends BaseController {
 
             $update_tour = $this->tour_model->update(
                 trim($_POST['id']),
-                trim($_POST['creator']),
                 trim($_POST['tour_name']),
                 trim($_POST['type']),
                 trim($_POST['status']),
@@ -56,7 +54,7 @@ class TourController extends BaseController {
         }
     }
 
-    public function load_my_username() {
+    public function load_by_username() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $tours = $this->tour_model->load_by_username($_GET['username']);
             echo json_encode($tours);

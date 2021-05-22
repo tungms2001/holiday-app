@@ -1,4 +1,4 @@
-package com.example.holiday.helper;
+package com.example.holiday.model;
 
 public class Comment {
     private final String avatar;
@@ -23,4 +23,3 @@ public class Comment {
         return content;
     }
 }
-
