@@ -42,7 +42,19 @@ class TourModel extends Database {
         $this->conn->query($reset_members_query);
 
         $this->join_tour($id, $members);
-        return array('success' => true, 'query' => $update_tour_query);
+        return array('success' => true);
+    }
+
+    public function accept($username, $tour_id) {
+        $accept_member_query = "INSERT member (tour_id, user)" .
+            "VALUES ($tour_id, '$username')";
+        $this->conn->query($accept_member_query);
+
+        $accept_notification_query = "UPDATE notification " .
+            "SET status = 'joined' " .
+            "WHERE tour_id = $tour_id AND sender = '$username'";
+        $this->conn->query($accept_notification_query);
+        return array("success" => true, "acp" => $accept_notification_query);
     }
 
     public function load_all() {
@@ -70,7 +82,7 @@ class TourModel extends Database {
         return $this->to_tours_array($result);
     }
 
-    public function load_by_position($position, $keyword) {
+    public function load_by_position($position, $keyword, $username) {
         if (empty($keyword))
             $select_query = "SELECT * FROM tour ORDER BY id DESC LIMIT $position,1";
         else
@@ -94,8 +106,17 @@ class TourModel extends Database {
                 'status' => $row['status'],
                 'during' => $row['during'],
                 'image' => $row['image'],
-                'note' => $row['note'],
+                'note' => $row['note']
             );
+
+            $get_status_query = "SELECT status " .
+                "FROM notification " .
+                "WHERE tour_id = " . $row['id'] . " AND " .
+                "sender = '$username'";
+            $status_result = $this->conn->query($get_status_query);
+            if ($status_result->num_rows > 0)
+                $status = $status_result->fetch_assoc()['status'];
+            $tour['notification_status'] = $status ?? '';
 
             $get_members_query = "SELECT username, avatar " .
                 "FROM user, member " .

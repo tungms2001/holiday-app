@@ -5,7 +5,7 @@
     android:id="@+id/rl_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/while_nearly"
+    android:background="@color/white_nearly"
     tools:context=".fragment.ProfileFragment">
 
     <ImageView

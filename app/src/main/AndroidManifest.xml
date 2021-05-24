@@ -19,7 +19,7 @@
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".CreateTourActivity" />
         <activity android:name=".MainActivity" />
-<!--        <activity android:name=".ForgetPasswordActivity" />-->
+        <!--        <activity android:name=".ForgetPasswordActivity" />-->
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

@@ -1,6 +1,7 @@
 package com.example.holiday;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -95,7 +96,18 @@ public class TourDetailActivity extends AppCompatActivity {
                     public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 
                     @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) { }
+                    public void onResponse(@NotNull Call call, @NotNull Response response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body().string());
+                            if (jsonObject.getBoolean("success"))
+                                TourDetailActivity.this.runOnUiThread(() -> {
+                                    btnApply.setText(getString(R.string.applied));
+                                    btnApply.setEnabled(false);
+                                });
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 });
             }
         });
@@ -198,7 +210,7 @@ public class TourDetailActivity extends AppCompatActivity {
     private void refreshDetail() {
         OkHttpClient client = new OkHttpClient();
         String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=get_detail&position="
-                + position + "&keyword=" + keyword;
+                + position + "&keyword=" + keyword + "&username=" + session.getUsername();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -225,6 +237,7 @@ public class TourDetailActivity extends AppCompatActivity {
                         Picasso.get().load(urlImage).into(ivAvatar);
 
                         // load members
+                        boolean isMember = false;
                         JSONArray jsonArray = jsonObject.getJSONArray("members");
                         members = new Vector<>();
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -233,14 +246,21 @@ public class TourDetailActivity extends AppCompatActivity {
                                     member.getString("avatar"),
                                     member.getString("username")
                             ));
+                            if (session.getUsername().equals(member.getString("username")))
+                                isMember = true;
                         }
                         MemberPresentationRecyclerViewAdapter adapter = new MemberPresentationRecyclerViewAdapter(
                                 TourDetailActivity.this, members);
                         rvMembers.setLayoutManager(new GridLayoutManager(TourDetailActivity.this, 4));
                         rvMembers.setAdapter(adapter);
 
+                        if (jsonObject.getString("notification_status").equals("pending")) {
+                            btnApply.setText(getString(R.string.applied));
+                            btnApply.setEnabled(false);
+                        }
+
                         // if user as creator, there is no apply button
-                        if (session.getUsername().equals(creator))
+                        if (session.getUsername().equals(creator) || isMember)
                             btnApply.setVisibility(View.GONE);
 
                         refreshComments();

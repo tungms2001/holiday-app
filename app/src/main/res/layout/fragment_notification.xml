@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/while_nearly"
+    android:background="@color/white_nearly"
+    android:padding="10dp"
     tools:context=".fragment.NotificationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_my_notifications"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

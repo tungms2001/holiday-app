@@ -1,6 +1,6 @@
 <?php
 class UserController extends BaseController {
-    private UserModel $user_model;
+    private $user_model;
 
     public function __construct() {
         $this->model('UserModel');

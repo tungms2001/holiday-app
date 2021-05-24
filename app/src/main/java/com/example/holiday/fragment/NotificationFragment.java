@@ -36,6 +36,7 @@ public class NotificationFragment extends Fragment {
 
     private Session session;
     private List<Notification> notifications;
+    private NotificationRecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class NotificationFragment extends Fragment {
         RecyclerView rvNotification = view.findViewById(R.id.rv_my_notifications);
         session = new Session(getActivity());
         notifications = new Vector<>();
+        adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
 
         OkHttpClient client = new OkHttpClient();
         String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=notification&action=load_all&username=" + session.getUsername();
@@ -66,16 +68,33 @@ public class NotificationFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         notifications.add(new Notification(
+                                jsonObject.getInt("tour_id"),
                                 jsonObject.getString("avatar"),
-                                jsonObject.getString("sender"),
+                                jsonObject.getString("sender_id"),
+                                jsonObject.getString("sender_name"),
                                 jsonObject.getString("tour_name"),
-                                jsonObject.getString("type"))
-                        );
+                                jsonObject.getString("status")
+                        ));
                     }
+                    adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
                     getActivity().runOnUiThread(() -> {
-                        NotificationRecyclerViewAdapter adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
                         rvNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvNotification.setAdapter(adapter);
+
+                        adapter.setOnItemClickListener(position -> {
+                            String urlAccept = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=accept&username="
+                                    + notifications.get(position).getCreatorId() + "&id=" + notifications.get(position).getTourId();
+                            Request acceptRequest = new Request.Builder()
+                                    .url(urlAccept)
+                                    .build();
+                            client.newCall(acceptRequest).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NotNull Call call, @NotNull IOException e) { }
+
+                                @Override
+                                public void onResponse(@NotNull Call call, @NotNull Response response) { }
+                            });
+                        });
                     });
                 } catch (JSONException | IOException e) {
                     e.printStackTrace();

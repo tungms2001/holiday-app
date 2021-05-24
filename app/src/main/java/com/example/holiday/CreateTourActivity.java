@@ -135,6 +135,11 @@ public class CreateTourActivity extends AppCompatActivity {
                 adapter = new MemberAddingRecyclerViewAdapter(CreateTourActivity.this, addedUsernames);
                 rvMembers.setAdapter(adapter);
                 actvMember.setText("");
+
+                adapter.setOnItemClickListener(position -> {
+                    addedUsernames.remove(position);
+                    adapter.notifyItemRemoved(position);
+                });
             }
         });
 

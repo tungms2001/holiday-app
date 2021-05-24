@@ -1,6 +1,6 @@
 <?php
 class CommentController extends BaseController {
-    private CommentModel $comment_model;
+    private $comment_model;
 
     public function __construct() {
         $this->model('CommentModel');

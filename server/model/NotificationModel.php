@@ -7,11 +7,14 @@ class NotificationModel extends Database {
         $this->conn = $db->connect();
     }
 
-    public function apply($id, $sender, $receiver) {
-        $insert_query = "INSERT INTO notification (tour_id, sender, receiver, type) " .
-            "VALUES ($id, '$sender', '$receiver', 'apply')";
-        $this->conn->query($insert_query);
-        return array("success" => true);
+    public function apply($id, $sender) {
+        $get_creator_query = "SELECT creator FROM tour WHERE id = $id";
+        $creator = $this->conn->query($get_creator_query)->fetch_assoc()['creator'];
+
+        $apply_notification_query = "INSERT INTO notification (tour_id, sender, receiver) " .
+            "VALUES ($id, '$sender', '$creator')";
+        $this->conn->query($apply_notification_query);
+        return array('success' => true);
     }
 
     public function load_all($username) {
@@ -36,10 +39,11 @@ class NotificationModel extends Database {
 
                 $notification = array(
                     'success' => true,
+                    'tour_id' => $row['tour_id'],
                     'tour_name' => $tour_name,
-                    'sender' => $sender_name,
+                    'sender_id' => $row['sender'],
+                    'sender_name' => $sender_name,
                     'avatar' => $sender_avatar,
-                    'type' => $row['type'],
                     'status' => $row['status'] ?? ''
                 );
                 array_push($notifications, $notification);

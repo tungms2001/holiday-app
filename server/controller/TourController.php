@@ -1,6 +1,6 @@
 <?php
 class TourController extends BaseController {
-    private TourModel $tour_model;
+    private $tour_model;
 
     public function __construct() {
         $this->model('TourModel');
@@ -47,6 +47,16 @@ class TourController extends BaseController {
         }
     }
 
+    public function accept() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $accept_applying = $this->tour_model->accept(
+                $_GET['username'],
+                intval($_GET['id'])
+            );
+            return $accept_applying;
+        }
+    }
+
     public function load_all() {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $tours = $this->tour_model->load_all();
@@ -65,7 +75,8 @@ class TourController extends BaseController {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $tour = $this->tour_model->load_by_position(
                 $_GET['position'],
-                $_GET['keyword']
+                $_GET['keyword'],
+                $_GET['username']
             );
             echo json_encode($tour);
         }

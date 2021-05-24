@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Travelholic</string>
+    <string name="app_name">Holiday</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>
     <string name="account">Email/Phone</string>
@@ -45,6 +45,8 @@
     <string name="name">Name</string>
     <string name="from">From</string>
     <string name="to">TO</string>
+    <string name="accepted">Accepted</string>
+    <string name="applied">Applied</string>
 
     <string-array name="tour_type">
         <item>The weekend break</item>
