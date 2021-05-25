@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
 import java.util.Vector;
 
 import okhttp3.Call;
@@ -42,6 +43,7 @@ import okhttp3.Response;
 public class ToursFragment extends Fragment {
 
     private List<Tour> tours;
+    private TourRecyclerViewAdapter adapter;
 
     private SearchView svTour;
     private RecyclerView rvTours;
@@ -56,10 +58,12 @@ public class ToursFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tours = new Vector<>();
+        adapter = new TourRecyclerViewAdapter(getActivity(), tours);
+
         svTour = view.findViewById(R.id.sv_tour);
         rvTours = view.findViewById(R.id.rv_tours);
         fabCreateTour = view.findViewById(R.id.fab_create_tour);
-        tours = new Vector<>();
 
         fabCreateTour.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CreateTourActivity.class);
@@ -137,9 +141,10 @@ public class ToursFragment extends Fragment {
                         ));
                     }
                     getActivity().runOnUiThread(() -> {
-                        TourRecyclerViewAdapter adapter = new TourRecyclerViewAdapter(getActivity(), tours);
+                        adapter = new TourRecyclerViewAdapter(getActivity(), tours);
                         rvTours.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvTours.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                     });
                 } catch (JSONException e) {
                     e.printStackTrace();

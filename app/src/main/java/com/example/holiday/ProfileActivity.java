@@ -1,27 +1,15 @@
-package com.example.holiday.fragment;
+package com.example.holiday;
 
-import android.annotation.SuppressLint;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.holiday.R;
-import com.example.holiday.UpdateProfileActivity;
 import com.example.holiday.helper.CircleTransform;
 import com.example.holiday.helper.Session;
-import com.google.android.gms.common.util.Base64Utils;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProfileFragment extends Fragment {
+public class ProfileActivity extends AppCompatActivity {
 
     private Session session;
 
@@ -49,34 +37,22 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+        map();
 
-    @SuppressLint("ResourceType")
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle saveInstanceState) {
-        super.onViewCreated(view, saveInstanceState);
-
-        ivAvatar = view.findViewById(R.id.iv_avatar);
-        tvFullname = view.findViewById(R.id.tv_fullname);
-        tvUsername = view.findViewById(R.id.tv_username);
-        tvEmail = view.findViewById(R.id.tv_email);
-        tvPhone = view.findViewById(R.id.tv_phone);
-        btnUpdate = view.findViewById(R.id.btn_update);
-        btnLogout = view.findViewById(R.id.btn_logout);
-
-        session = new Session(getActivity());
+        session = new Session(ProfileActivity.this);
         refreshData();
 
         btnUpdate.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), UpdateProfileActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, UpdateProfileActivity.class);
             startActivity(intent);
         });
 
         btnLogout.setOnClickListener(v -> {
             session.unsetSession();
-            getActivity().finish();
+            finish();
         });
     }
 
@@ -98,7 +74,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) {
-                getActivity().runOnUiThread(() -> {
+                ProfileActivity.this.runOnUiThread(() -> {
                     try {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         String url = "http://10.0.2.2:8080/holidayapp/server/" + jsonObject.getString("avatar");
@@ -113,5 +89,15 @@ public class ProfileFragment extends Fragment {
                 });
             }
         });
+    }
+
+    private void map() {
+        ivAvatar = findViewById(R.id.iv_avatar);
+        tvFullname = findViewById(R.id.tv_fullname);
+        tvUsername = findViewById(R.id.tv_username);
+        tvEmail = findViewById(R.id.tv_email);
+        tvPhone = findViewById(R.id.tv_phone);
+        btnUpdate = findViewById(R.id.btn_update);
+        btnLogout = findViewById(R.id.btn_logout);
     }
 }

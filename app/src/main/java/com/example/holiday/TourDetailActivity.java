@@ -181,8 +181,6 @@ public class TourDetailActivity extends AppCompatActivity {
                 intent.putStringArrayListExtra("usernames", usernames);
                 startActivity(intent);
                 return true;
-            case R.id.delete:
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

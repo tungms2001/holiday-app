@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText txtAccount;
     private EditText txtPassword;
-    private TextView tvForgotPassword;
     private Button btnSignup;
 
     private Session session;
@@ -93,11 +92,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-        tvForgotPassword.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
-            startActivity(intent);
-        });
-
         btnSignup.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
@@ -120,7 +114,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txtAccount = findViewById(R.id.txt_account);
         txtPassword = findViewById(R.id.txt_password);
-        tvForgotPassword = findViewById(R.id.tv_forgot_password);
         btnSignup = findViewById(R.id.btn_signup);
     }
 }
