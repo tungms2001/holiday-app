@@ -49,7 +49,7 @@ public class NotificationFragment extends Fragment {
 
         RecyclerView rvNotification = view.findViewById(R.id.rv_my_notifications);
         session = new Session(getActivity());
-        notifications = new Vector<>();
+        notifications = new Vector<>();//tạo vector rổng
         adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
 
         OkHttpClient client = new OkHttpClient();
@@ -66,8 +66,8 @@ public class NotificationFragment extends Fragment {
                 try {
                     JSONArray jsonArray = new JSONArray(response.body().string());
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        notifications.add(new Notification(
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);//lấy tất cả những dữ liệu này về
+                        notifications.add(new Notification(//truyền nó vào notification
                                 jsonObject.getInt("tour_id"),
                                 jsonObject.getString("avatar"),
                                 jsonObject.getString("sender_id"),
@@ -77,11 +77,11 @@ public class NotificationFragment extends Fragment {
                         ));
                     }
                     adapter = new NotificationRecyclerViewAdapter(getActivity(), notifications);
-                    getActivity().runOnUiThread(() -> {
+                    getActivity().runOnUiThread(() -> {//đưa ra luồn hiển thị ra màn hình
                         rvNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvNotification.setAdapter(adapter);
 
-                        adapter.setOnItemClickListener(position -> {
+                        adapter.setOnItemClickListener(position -> {//bắt sự kiện chấp nhận thêm vào tour
                             String urlAccept = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=accept&username="
                                     + notifications.get(position).getCreatorId() + "&id=" + notifications.get(position).getTourId();
                             Request acceptRequest = new Request.Builder()

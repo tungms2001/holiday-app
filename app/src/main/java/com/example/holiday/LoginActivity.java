@@ -28,6 +28,8 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int LOGIN = 1;
+    private static final int SIGNUP  = 2;
     private Button btnLogin;
     private EditText txtAccount;
     private EditText txtPassword;
@@ -35,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private Session session;
     private String username;
-    private static int REQUEST_CODE = 8080;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         map();
 
-        session = new Session(LoginActivity.this);
+        session = new Session(LoginActivity.this);//lưu trạng thái đăng nhập
         username = session.getUsername();
-        if (username != null) {
+        if (username != null) {//kiểm tra trạng thái đăng nhập
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, LOGIN);//nếu đã lưu rồi thì ta nhảy thẳng vào trong nội dung app
         }
-
-        btnLogin.setOnClickListener(v -> {
+//còn nếu trả kết quả về là null thì thực hiện phần dưới đây
+        btnLogin.setOnClickListener(v -> {//bấm vào nút login thì dữ liệu sẽ được gửi lên server
             OkHttpClient client = new OkHttpClient();
             RequestBody body = new FormBody.Builder()
                     .add("account", txtAccount.getText().toString())
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    try {
+                    try {//dữ liệu được trả về khi đăng nhập thành công
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         if (jsonObject.getBoolean("success")) {
                             session.setSession(
@@ -79,9 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                             username = jsonObject.getString("username");
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            startActivityForResult(intent, LOGIN);//bắt sự kiện qua main_activity
                         }
-                        else {
+                        else {//báo lỗi nếu thông tin không đúng
                             LoginActivity.this.runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Account or password incorrect!", Toast.LENGTH_SHORT).show());
                         }
                     }
@@ -92,25 +93,30 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-        btnSignup.setOnClickListener(v -> {
+        btnSignup.setOnClickListener(v -> {//bắt sự kiện bấm nút tạo tài khoãn sẽ qua activity singup
             Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
+            startActivityForResult(intent, SIGNUP);
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);//thực hiện cú pháp đăng kí, nếu thành công thông tin sẽ tự điền vào Login
+        if (resultCode == RESULT_OK) {//sau đó tự bấm vào đăng nhập
+            if (requestCode == SIGNUP) {
                 txtAccount.setText(data.getStringExtra("account"));
                 txtPassword.setText(data.getStringExtra("password"));
                 btnLogin.performClick();
             }
+            else {
+                String close = data.getData().toString();
+                if (close.equals("close"))
+                    finishAndRemoveTask();
+            }
         }
     }
 
-    private void map() {
+    private void map() {//ánh xạ với xml
         btnLogin = findViewById(R.id.btn_login);
         txtAccount = findViewById(R.id.txt_account);
         txtPassword = findViewById(R.id.txt_password);

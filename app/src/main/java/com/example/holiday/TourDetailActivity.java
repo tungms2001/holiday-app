@@ -100,7 +100,7 @@ public class TourDetailActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             if (jsonObject.getBoolean("success"))
-                                TourDetailActivity.this.runOnUiThread(() -> {
+                                TourDetailActivity.this.runOnUiThread(() -> {//khi đã bấm vào rồi thì không thể bấm lần nữa
                                     btnApply.setText(getString(R.string.applied));
                                     btnApply.setEnabled(false);
                                 });
@@ -113,7 +113,7 @@ public class TourDetailActivity extends AppCompatActivity {
         });
 
         // event to make a comment
-        ibComment.setOnClickListener(v -> {
+        ibComment.setOnClickListener(v -> {//bấm nút comment để commnet
             if (!txtComment.getText().toString().isEmpty()) {
                 RequestBody body = new FormBody.Builder()
                         .add("tour_id", tourId)
@@ -162,7 +162,7 @@ public class TourDetailActivity extends AppCompatActivity {
     // choose what to process when touch option menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()) {//load hết dữ liệu hiện có khi ở chế độ update
             case R.id.update:
                 Intent intent = new Intent(TourDetailActivity.this, CreateTourActivity.class);
                 intent.putExtra("mode", "update");

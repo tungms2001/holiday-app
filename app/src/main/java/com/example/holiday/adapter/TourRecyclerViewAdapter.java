@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class TourRecyclerViewAdapter extends RecyclerView.Adapter<TourRecyclerViewAdapter.ViewHolder> {
-
+//Lớp này dùng để xây dựng view cho thông tin cở bản của cả một tour
     private final LayoutInflater inflater;
     private final List<Tour> tours;
 
@@ -39,11 +39,11 @@ public class TourRecyclerViewAdapter extends RecyclerView.Adapter<TourRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull @NotNull TourRecyclerViewAdapter.ViewHolder holder, int position) {
         String url = "http://10.0.2.2:8080/holidayapp/server/" + tours.get(position).getImage();
-        Picasso.get().load(url).into(holder.ivAvatar);
-        holder.tvName.setText(tours.get(position).getTourName());
-        holder.tvDuring.setText(tours.get(position).getDuring());
-        holder.tvStatus.setText(tours.get(position).getStatus());
-        holder.tvType.setText(tours.get(position).getType());
+        Picasso.get().load(url).into(holder.ivAvatar);//ảnh chuyến đi
+        holder.tvName.setText(tours.get(position).getTourName());//tên chuyến
+        holder.tvDuring.setText(tours.get(position).getDuring());//thời gian
+        holder.tvStatus.setText(tours.get(position).getStatus());//trang thái
+        holder.tvType.setText(tours.get(position).getType());//loại hình chuyến đi
     }
 
     @Override

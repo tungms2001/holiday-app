@@ -60,12 +60,12 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_profile);
         init();
 
-        ivUpdateAvatar.setOnClickListener(v -> {
+        ivUpdateAvatar.setOnClickListener(v -> {//bấm vào avatar và chọn hình mình muốn
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent, SELECT_PHOTO);
         });
-
+        //tick vào nếu muốn cập nhật password mới
         chkUpdatePassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 rlUpdatePassword.setVisibility(View.VISIBLE);
@@ -78,7 +78,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
         });
 
-        btnSave.setOnClickListener(v -> {
+        btnSave.setOnClickListener(v -> {//bấm vào Save và nó gửi dữ liệu lên server
             String base64Data = "";
             if (bitmap != null) {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -129,7 +129,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+    @Override//hứng hình lại để đưa lên server và nhận về app
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK) {
@@ -162,7 +162,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 .url(url)
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new Callback() {//load mọi thông tin hiện có để người dùng cập nhật lại
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) { }
 

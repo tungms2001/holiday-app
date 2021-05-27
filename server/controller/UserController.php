@@ -4,14 +4,14 @@ class UserController extends BaseController {
 
     public function __construct() {
         $this->model('UserModel');
-        $this->user_model = new UserModel();
+        $this->user_model = new UserModel();//tạo thể hiện
     }
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);//làm sạch file POST
 
-            $login_user = $this->user_model->login(
+            $login_user = $this->user_model->login(//hàm đăng yêu cầu cần những gì
                 trim($_POST['account']),
                 trim($_POST['password'])
             );

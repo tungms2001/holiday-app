@@ -1,12 +1,12 @@
 package com.example.holiday.model;
 
-public class Tour {
+public class Tour {//mổi chuyến được tạo ở fragment_detail_tour
     private String tourName;
     private String type;
     private String status;
     private String during;
     private String image;
-
+//hàm khởi tạo
     public Tour(String tourName, String type, String status, String during, String image) {
         this.tourName = tourName;
         this.type = type;

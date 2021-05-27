@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,9 @@ import com.example.holiday.fragment.NotificationFragment;
 import com.example.holiday.fragment.ToursFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
@@ -72,11 +76,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == FINISH)
-        {
-            finish();
-        }
+            if (resultCode == RESULT_OK) {
+                String result = data.getData().toString();
+                if (result.equals("logout"))
+                    finish();
+            }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        data.setData(Uri.parse("close"));
+        setResult(RESULT_OK, data);
+        super.onBackPressed();
     }
 
     private static class PageAdapter extends FragmentPagerAdapter {

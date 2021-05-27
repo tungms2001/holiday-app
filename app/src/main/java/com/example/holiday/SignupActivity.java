@@ -42,7 +42,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         map();
 
-        btnSignup.setOnClickListener(v -> {
+        btnSignup.setOnClickListener(v -> {//kiểm tra thông tin đúng sai
             List<String> listPrompts = new Vector<>();
             if (txtFullname.getText().toString().isEmpty())
                 listPrompts.add(getString(R.string.full_name));
@@ -61,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
                 if (isValidEmail(txtEmail.getText())) {
                     if (txtPassword.getText().toString().equals(txtConfirmPassword.getText().toString())) {
                         OkHttpClient client = new OkHttpClient();
-                        RequestBody body = new FormBody.Builder()
+                        RequestBody body = new FormBody.Builder()//đăng thông tin lên server
                                 .add("fullname", txtFullname.getText().toString())
                                 .add("username", txtUsername.getText().toString())
                                 .add("email", txtEmail.getText().toString())
@@ -70,9 +70,9 @@ public class SignupActivity extends AppCompatActivity {
                                 .build();
                         String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=signup";
                         Request request = new Request.Builder()
-                                .url(url)
-                                .post(body)
-                                .build();
+                                .url(url)//nhận đường kết nối, đóng gói thông tin
+                                .post(body)//đưa thông tin lên server
+                                .build();//xác nhận thông tin vận chuyển hoàn thành
 
                         client.newCall(request).enqueue(new Callback() {
                             @Override
@@ -87,8 +87,8 @@ public class SignupActivity extends AppCompatActivity {
                                             Intent intent = new Intent();
                                             intent.putExtra("account", txtUsername.getText().toString());
                                             intent.putExtra("password", txtPassword.getText().toString());
-                                            setResult(RESULT_OK, intent);
-                                            finish();
+                                            setResult(RESULT_OK, intent);//nếu thành công sẽ trả về thông tin trên
+                                            finish();//thành công sẽ trở về login và đăng nhập vào main
                                         }
                                         Toast.makeText(SignupActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                                     } catch (JSONException | IOException e) {
@@ -97,7 +97,7 @@ public class SignupActivity extends AppCompatActivity {
                                 });
                             }
                         });
-                    }
+                    }//nổi một lồng là một lỗi cần sửa
                     else {
                         Toast.makeText(SignupActivity.this, "Password not matches", Toast.LENGTH_SHORT).show();
                     }
@@ -126,7 +126,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.btn_signup);
     }
 
-    private boolean isValidEmail(CharSequence target) {
+    private boolean isValidEmail(CharSequence target) {//kiểm tra tính hợp lệ của email
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

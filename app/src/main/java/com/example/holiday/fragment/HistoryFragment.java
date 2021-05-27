@@ -33,7 +33,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HistoryFragment extends Fragment {
-
+//lớp này tương tự TourFragment-khác chổ không thể thao tác nào được chỉ để đọc
     private Session session;
     private List<Tour> tours;
 

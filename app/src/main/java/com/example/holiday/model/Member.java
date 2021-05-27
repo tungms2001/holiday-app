@@ -1,6 +1,6 @@
 package com.example.holiday.model;
 
-public class Member {
+public class Member {//có 2 thành phần
 
     private final String avatar;
     private final String username;

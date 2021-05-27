@@ -1,5 +1,5 @@
 <?php
-class BaseController {
+class BaseController { //hổ trợ cho index
     const VIEW_FOLDER = 'view/';
     const MODEL_FOLDER = 'model/';
 

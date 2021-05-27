@@ -7,13 +7,13 @@ class UserModel {
         $this->conn = $db->connect();
     }
 
-    public function login($account, $password) {
-        $query = "SELECT * FROM user " .
+    public function login($account, $password) {//phương thức login
+        $query = "SELECT * FROM user " .//có thể dăng nhập bằng nhiều thứ
             "WHERE (username = '$account' OR email = '$account' OR phone = '$account') AND password = '$password'";
         $result = $this->conn->query($query);
         $data = array();
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+            $row = $result->fetch_assoc();//chuyển đổi dữ liệu bảng vs mảng
             $data = array(
                 'success' => true,
                 'username' => $row['username'],

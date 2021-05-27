@@ -3,6 +3,7 @@ package com.example.holiday;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,6 +53,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         btnLogout.setOnClickListener(v -> {
             session.unsetSession();
+            Intent data = new Intent();
+            data.setData(Uri.parse("logout"));
+            setResult(RESULT_OK, data);
             finish();
         });
     }

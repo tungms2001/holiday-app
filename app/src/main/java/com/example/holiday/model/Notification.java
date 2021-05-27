@@ -1,12 +1,12 @@
 package com.example.holiday.model;
 
 public class Notification {
-    private final int tourId;
-    private final String avatar;
-    private final String creatorId;
-    private final String creatorName;
-    private final String tourName;
-    private final String status;
+    private final int tourId;//mã chuyến
+    private final String avatar;//hình chuyến
+    private final String creatorId;//mã người tạo
+    private final String creatorName;//tên người tạo
+    private final String tourName;//tên chuyến
+    private final String status;//tình trạng(đang chờ hay đã vào chuyến
 
     public Notification(int tourId, String avatar, String creatorId, String creatorName, String tourName, String status) {
         this.tourId = tourId;

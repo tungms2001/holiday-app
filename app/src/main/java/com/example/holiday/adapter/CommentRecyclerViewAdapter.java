@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
-
+//xây dựng lớp một danh sách các comment
     private final LayoutInflater inflater;
-    private final List<Comment> comments;
+    private final List<Comment> comments;//tạo 1 danh sách các comment
 
     public CommentRecyclerViewAdapter(Context context, List<Comment> comments) {
         this.inflater = LayoutInflater.from(context);
@@ -39,10 +39,10 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-        String url = "http://10.0.2.2:8080/holidayapp/server/" + comments.get(position).getAvatar();
-        Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);
-        holder.tvFullname.setText(comments.get(position).getFullname());
-        holder.tvContent.setText(comments.get(position).getContent());
+        String url = "http://10.0.2.2:8080/holidayapp/server/" + comments.get(position).getAvatar();//192.168.1.2
+        Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);//vào link lấy ảnh, xong dùng thư viện load ảnh về
+        holder.tvFullname.setText(comments.get(position).getFullname());//lấy tên về
+        holder.tvContent.setText(comments.get(position).getContent());//lấy nội dung về
     }
 
     @Override
@@ -56,7 +56,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         private final TextView tvFullname;
         private final TextView tvContent;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public ViewHolder(@NonNull @NotNull View itemView) {//ánh xạ dữ liệu để hiện ra xem
             super(itemView);
             ivAvatar = itemView.findViewById(R.id.iv_comment_avatar);
             tvFullname = itemView.findViewById(R.id.tv_comment_fullname);

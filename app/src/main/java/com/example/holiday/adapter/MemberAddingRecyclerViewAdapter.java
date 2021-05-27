@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class MemberAddingRecyclerViewAdapter extends RecyclerView.Adapter<MemberAddingRecyclerViewAdapter.ViewHolder> {
-
+//Lớp này dùng để chứa danh sách các thành viên thêm vào
     private OnItemClickListener mListener;
     private final LayoutInflater inflater;
     private final List<String> usernames;
@@ -45,7 +45,7 @@ public class MemberAddingRecyclerViewAdapter extends RecyclerView.Adapter<Member
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MemberAddingRecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.tvUsername.setText(usernames.get(position));
+        holder.tvUsername.setText(usernames.get(position));//lấy ra tên
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MemberAddingRecyclerViewAdapter extends RecyclerView.Adapter<Member
             tvUsername = itemView.findViewById(R.id.tv_username);
             ivRemove = itemView.findViewById(R.id.iv_remove);
 
-            ivRemove.setOnClickListener(v -> {
+            ivRemove.setOnClickListener(v -> {//tạo nút, bấm nào nó sẽ xóa thành phần đó
                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION)

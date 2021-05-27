@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<NotificationRecyclerViewAdapter.ViewHolder> {
-
+//Lớp này để hiển thị thông báo ở fragment_notification
     private OnItemClickListener mListener;
     private final LayoutInflater inflater;
     private final List<Notification> notifications;
@@ -52,10 +52,10 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         String url = "http://10.0.2.2:8080/holidayapp/server/" + notifications.get(position).getAvatar();
         Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);
         String content = notifications.get(position).getCreatorName() + " want to join " +
-                notifications.get(position).getTourName();
+                notifications.get(position).getTourName();//thông báo load về gồm ảnh tên và nội dung và địa điểm, dùng tính năng cộng chuỗi
         holder.tvContent.setText(content);
         if (notifications.get(position).getStatus().equals("joined")) {
-            holder.btnAccept.setText(holder.itemView.getContext().getString(R.string.accepted));
+            holder.btnAccept.setText(holder.itemView.getContext().getString(R.string.accept));//tạo ra nút accept nhấn nào nó sẽ xám đi kết thúc tác vụ
             holder.btnAccept.setEnabled(false);
         }
     }
@@ -77,11 +77,13 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
             tvContent = itemView.findViewById(R.id.tv_notif_content);
             btnAccept = itemView.findViewById(R.id.btn_accept);
 
-            btnAccept.setOnClickListener(v -> {
+            btnAccept.setOnClickListener(v -> {//ánh xạ với button accept
                 if (listener != null) {
                     int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION)
+                    if (position != RecyclerView.NO_POSITION) {
                         listener.onAcceptClick(position);
+                        btnAccept.setEnabled(false);
+                    }
                 }
             });
         }

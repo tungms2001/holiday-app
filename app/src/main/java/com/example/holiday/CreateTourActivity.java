@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.holiday.adapter.MemberAddingRecyclerViewAdapter;
 import com.example.holiday.helper.Session;
@@ -85,7 +86,7 @@ public class CreateTourActivity extends AppCompatActivity {
         adapter = new MemberAddingRecyclerViewAdapter(CreateTourActivity.this, addedUsernames);
 
         Intent intent = getIntent();
-        String mode = intent.getStringExtra("mode");
+        String mode = intent.getStringExtra("mode");//để nó ở nhiều chế độ, để tận dụng giữa tạo chuyến và sửa chuyến
         if (mode.equals("update")) {
             // id for update later
             tourId = Integer.parseInt(intent.getStringExtra("id"));
@@ -150,54 +151,59 @@ public class CreateTourActivity extends AppCompatActivity {
         });
 
         // event submit (create or update) a tour
-        btnSubmit.setOnClickListener(v -> {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 0, stream);
-            String base64Data = Base64Utils.encode(stream.toByteArray());
+        btnSubmit.setOnClickListener(v -> {//điền hết tất cả các thông tin
+            if (bitmapImage != null) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmapImage.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                String base64Data = Base64Utils.encode(stream.toByteArray());
 
-            OkHttpClient client = new OkHttpClient();
-            RequestBody body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("id", String.valueOf(tourId))
-                    .addFormDataPart("creator", session.getUsername())
-                    .addFormDataPart("tour_name", txtTourName.getText().toString())
-                    .addFormDataPart("type", spnTourType.getSelectedItem().toString())
-                    .addFormDataPart("status", spnTourStatus.getSelectedItem().toString())
-                    .addFormDataPart("departure", txtTourDeparture.getText().toString())
-                    .addFormDataPart("destination", txtTourDestination.getText().toString())
-                    .addFormDataPart("during", txtTourDuring.getText().toString())
-                    .addFormDataPart("members", TextUtils.join(" ", addedUsernames))
-                    .addFormDataPart("note", txtTourNote.getText().toString())
-                    .addFormDataPart("image", base64Data)
-                    .build();
-            String url;
-            if (mode.equals("create"))
-                url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=create";
-            else
-                url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=update";
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) { }
+                OkHttpClient client = new OkHttpClient();
+                RequestBody body = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("id", String.valueOf(tourId))
+                        .addFormDataPart("creator", session.getUsername())
+                        .addFormDataPart("tour_name", txtTourName.getText().toString())
+                        .addFormDataPart("type", spnTourType.getSelectedItem().toString())
+                        .addFormDataPart("status", spnTourStatus.getSelectedItem().toString())
+                        .addFormDataPart("departure", txtTourDeparture.getText().toString())
+                        .addFormDataPart("destination", txtTourDestination.getText().toString())
+                        .addFormDataPart("during", txtTourDuring.getText().toString())
+                        .addFormDataPart("members", TextUtils.join(" ", addedUsernames))
+                        .addFormDataPart("note", txtTourNote.getText().toString())
+                        .addFormDataPart("image", base64Data)
+                        .build();
+                String url;
+                if (mode.equals("create"))//nếu là tạo thì đưa dữ liệu vào tạo
+                    url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=create";
+                else// ngược lại đưa dữ liệu vào update tour
+                    url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=tour&action=update";
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    }
 
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) {
-                    CreateTourActivity.this.runOnUiThread(() -> {
-                        JSONObject jsonObject;
-                        try {
-                            jsonObject = new JSONObject(response.body().string());
-                            if (jsonObject.getBoolean("success"))
-                                finish();
-                        }
-                        catch (JSONException | IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                }
-            });
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) {
+                        CreateTourActivity.this.runOnUiThread(() -> {
+                            JSONObject jsonObject;
+                            try {//dữ liệu được nhận về
+                                jsonObject = new JSONObject(response.body().string());
+                                if (jsonObject.getBoolean("success"))
+                                    finish();
+                            } catch (JSONException | IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                });
+            }
+            else {
+                Toast.makeText(this, "Please update your image", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -232,7 +238,7 @@ public class CreateTourActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btn_tour_create);
     }
 
-    // initial adapter for type and status adapter
+    // initial adapter for type and status adapter/lấy các tên từ string trong xml đưa vào spinner
     private void initAdapter() {
         // initial adapter from string resource
         typeAdapter = ArrayAdapter.createFromResource(
@@ -242,7 +248,7 @@ public class CreateTourActivity extends AppCompatActivity {
                 CreateTourActivity.this, R.array.tour_status, R.layout.support_simple_spinner_dropdown_item);
         spnTourStatus.setAdapter(statusAdapter);
 
-        // get username adapter from server
+        // get username adapter from server/lấy hết tin người dùng về rồi đưa vào gợi ý
         OkHttpClient client = new OkHttpClient();
         String url = "http://10.0.2.2:8080/holidayapp/server/index.php?controller=user&action=get_all_usernames";
         Request request = new Request.Builder()
@@ -262,7 +268,7 @@ public class CreateTourActivity extends AppCompatActivity {
                             usernames.add(jsonArray.getJSONObject(i).getString("username"));
                         ArrayAdapter<String> usernameAdapter =
                                 new ArrayAdapter<>(CreateTourActivity.this, R.layout.support_simple_spinner_dropdown_item, usernames);
-                        actvMember.setAdapter(usernameAdapter);
+                        actvMember.setAdapter(usernameAdapter);//thực hiện gợi ý tên người dùng
                     } catch (JSONException | IOException e) {
                         e.printStackTrace();
                     }

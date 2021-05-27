@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {//lớp này dùng để xử lý sự kiện khi bấm vào một chổ nào đó nó sẽ qua chổ chỉ định đến
     private final OnItemClickListener mListener;
 
     public interface OnItemClickListener {

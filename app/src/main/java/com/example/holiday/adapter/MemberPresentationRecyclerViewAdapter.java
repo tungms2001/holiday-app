@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class MemberPresentationRecyclerViewAdapter extends RecyclerView.Adapter<MemberPresentationRecyclerViewAdapter.ViewHolder> {
-
+//Lớp này hiện ra thành viên ở các chuyến đi chung, chỉ để xem danh sách lớp mà thôi
     private final LayoutInflater inflater;
     private final List<Member> members;
 
@@ -32,7 +32,7 @@ public class MemberPresentationRecyclerViewAdapter extends RecyclerView.Adapter<
     @NonNull
     @NotNull
     @Override
-    public MemberPresentationRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public MemberPresentationRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {//dùng để ánh xạ chính xác view nào trong xml
         View view = inflater.inflate(R.layout.member_presentation_block, parent, false);
         return new MemberPresentationRecyclerViewAdapter.ViewHolder(view);
     }
@@ -40,7 +40,7 @@ public class MemberPresentationRecyclerViewAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(@NonNull @NotNull MemberPresentationRecyclerViewAdapter.ViewHolder holder, int position) {
         String url = "http://10.0.2.2:8080/holidayapp/server/" + members.get(position).getAvatar();
-        Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);
+        Picasso.get().load(url).transform(new CircleTransform()).into(holder.ivAvatar);//load ảnh và tên thành viên
         holder.tvUsername.setText(members.get(position).getUsername());
     }
 
